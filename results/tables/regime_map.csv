@@ -1,0 +1,5 @@
+# RECONCILED to the full-access text baseline (was previously weak-baseline GOs — the access-fairness violation the paper critiques). Verdicts now match gapfill/natural_subsat/gate-closer. strong_text_auroc = FULL-access TF-IDF (gpt_oss core also has a 32B-judge baseline 0.954 -> delta +0.021).
+model,tier,contrast,layer,n,pos,strong_text_auroc,act_auroc,delta,floor95,p,saturated,verdict
+gpt_oss_20b,core,emergent,13,108,36,0.861,0.963,0.102,0.219,0.188,no,CONFOUNDED
+qwen3_32b,core,emergent,29,170,46,0.980,0.862,-0.118,0.120,0.950,yes,CONFOUNDED
+qwen3_32b,transfer,emergent,29,216,72,0.920,0.669,-0.251,0.096,1.000,no,CONFOUNDED

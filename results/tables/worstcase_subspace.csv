@@ -1,0 +1,7 @@
+# leak-free: StandardScaler+PCA fit on TRAIN fold only. 4-way decode (chance=0.25), Mistral L24, n=205. accuracy (not AUROC).
+subspace_removed_topk,decode_acc,chance
+0,0.902,0.25
+3,0.341,0.25
+6,0.302,0.25
+10,0.302,0.25
+20,0.302,0.25

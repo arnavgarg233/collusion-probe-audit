@@ -1,0 +1,6 @@
+pca_dim,act_auroc,full_access_text_baseline,beats_full_access,verdict,note
+10,0.8039,0.98,False,ACT_SATURATES_BELOW_FULL_ACCESS,"raw activation-only AUROC (group-CV, logistic on PCA(act)); access-fair baseline = paper full-access text 0.980, NOT the degenerate on-disk TF-IDF 0.674"
+30,0.8558,0.98,False,ACT_SATURATES_BELOW_FULL_ACCESS,"raw activation-only AUROC (group-CV, logistic on PCA(act)); access-fair baseline = paper full-access text 0.980, NOT the degenerate on-disk TF-IDF 0.674"
+100,0.9361,0.98,False,ACT_SATURATES_BELOW_FULL_ACCESS,"raw activation-only AUROC (group-CV, logistic on PCA(act)); access-fair baseline = paper full-access text 0.980, NOT the degenerate on-disk TF-IDF 0.674"
+200,0.9381,0.98,False,ACT_SATURATES_BELOW_FULL_ACCESS,"raw activation-only AUROC (group-CV, logistic on PCA(act)); access-fair baseline = paper full-access text 0.980, NOT the degenerate on-disk TF-IDF 0.674"
+full,0.9385,0.98,False,ACT_SATURATES_BELOW_FULL_ACCESS,"raw activation-only AUROC (group-CV, logistic on PCA(act)); access-fair baseline = paper full-access text 0.980, NOT the degenerate on-disk TF-IDF 0.674"

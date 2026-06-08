@@ -1,0 +1,43 @@
+{
+  "n": 570,
+  "pos": 150,
+  "n_groups": 4,
+  "auroc_text": 0.937,
+  "auroc_reward": 0.826,
+  "auroc_combo": 0.85,
+  "delta_combo_minus_text": -0.087,
+  "op_text": {
+    "tpr@1%fpr": 0.933,
+    "_fpr@1%": 0.0,
+    "tpr@5%fpr": 0.933,
+    "_fpr@5%": 0.0,
+    "min_resolvable_fpr": 0.0024,
+    "n_neg": 420
+  },
+  "op_reward": {
+    "tpr@1%fpr": 0.0,
+    "_fpr@1%": 0.0,
+    "tpr@5%fpr": 0.72,
+    "_fpr@5%": 0.0238,
+    "min_resolvable_fpr": 0.0024,
+    "n_neg": 420
+  },
+  "op_combo": {
+    "tpr@1%fpr": 0.0,
+    "_fpr@1%": 0.0,
+    "tpr@5%fpr": 0.727,
+    "_fpr@5%": 0.0333,
+    "min_resolvable_fpr": 0.0024,
+    "n_neg": 420
+  },
+  "delta_floor95": 0.072,
+  "delta_p": 0.995,
+  "verdict": "ACTIVATIONS_ABSENT",
+  "scenarios": [
+    "continuous_double_auction",
+    "first_price_auction",
+    "peer_review",
+    "pricing_duopoly"
+  ],
+  "acts": "absent(text+reward benchmark)"
+}

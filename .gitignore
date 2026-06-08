@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+.DS_Store
+
+# local tooling / editor state (not part of the project)
+.claude/
+.vscode/
+.idea/
+
+# regenerable run artifacts (large; reproduced by the pipeline)
+data/transcripts/
+data/activations/
+
+# keep empty result/figure dirs tracked
+!**/.gitkeep
+
+# NARCBench slice is downloaded to /tmp at runtime, never committed
+*.bak
+*.bak_*
+results/runpod/raw_acts/*.npz
+results/runpod/raw_acts/wmdp.csv
+docs/PAPER_CONTEXT.md
+.claude
+results/tables/judge_cache_*.json

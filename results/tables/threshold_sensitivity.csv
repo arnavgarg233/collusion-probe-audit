@@ -1,0 +1,4 @@
+threshold,n_wins,win_set
+0.05,4,b2w_apps_backdoor;mistral_decode;mistral_instruct_decode;gemma_cb_decode
+0.1,4,b2w_apps_backdoor;mistral_decode;mistral_instruct_decode;gemma_cb_decode
+0.15,4,b2w_apps_backdoor;mistral_decode;mistral_instruct_decode;gemma_cb_decode

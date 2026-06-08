@@ -1,0 +1,13 @@
+name: collusion
+channels: [conda-forge]
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - torch>=2.4
+      - transformers>=4.46
+      - accelerate
+      - safetensors
+      - scikit-learn>=1.3
+      - numpy<2
+      - matplotlib

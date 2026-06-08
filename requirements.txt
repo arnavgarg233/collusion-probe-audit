@@ -1,0 +1,8 @@
+# Synthetic gate runs on Apple Silicon (M2/MPS), fp16. Pin numpy<2 for sklearn/torch ABI calm.
+torch>=2.4
+transformers>=4.46
+accelerate
+safetensors
+scikit-learn>=1.3
+numpy<2
+seaborn>=0.13

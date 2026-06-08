@@ -1,0 +1,6 @@
+model,tier,contrast,layer,baseline,strength,base,act,full,delta,floor95,p,n,pos,verdict
+gpt_oss_20b,core,emergent,13,tfidf,50,0.7685,0.9633,0.9633,0.1948,0.1277,0.005,108,36,WHITE_BOX_WINS
+gpt_oss_20b,core,emergent,13,tfidf,150,0.8302,0.9633,0.9633,0.1331,0.1738,0.12,108,36,CONFOUNDED
+gpt_oss_20b,core,emergent,13,tfidf,500,0.8673,0.9633,0.9633,0.0961,0.1833,0.14,108,36,CONFOUNDED
+gpt_oss_20b,core,emergent,13,tfidf,all,0.8611,0.9633,0.9633,0.1022,0.1823,0.19,108,36,CONFOUNDED
+gpt_oss_20b,core,emergent,13,judge:openai:gpt-5.5-verbalized,frontier,0.8488,0.9633,0.9633,0.1146,0.1196,0.065,108,36,CONFOUNDED

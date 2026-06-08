@@ -1,0 +1,29 @@
+{
+  "_README": "Audited inputs for scripts/make_figures.py that are NOT rows in any results CSV. Every number is transcribed from an audited source (NOT invented); see _source on each block. CSV-backed values (trained-text AUROCs, sandbagging) are read directly from results/tables/*.csv by make_figures.py and are NOT duplicated here. To regenerate the reproducible entries, see _repro_cmd.",
+
+  "fig1_reproduction_gpt_oss_20b": {
+    "_source": "results/rebuttal_reproduction.md (git HEAD; scenario-level reproduction of NARCBench's 5 techniques + the omitted observable behavioural baseline). gpt_oss_20b.",
+    "_note": "their_best = best of {align, peak, split, asym, sortedConcat}; behaviour = fair observable baseline (votes-vs-merit / bet-spread+length, NO hidden count); text = trained text classifier. Transfer their_best=0.98 (peak) and behaviour=0.60 are the AUDITED values; the previous hardcoded 0.976/0.604 had drifted from these and were not in any source.",
+    "tiers": ["Core", "Stego", "Transfer"],
+    "their_best": [1.00, 1.00, 0.98],
+    "behaviour": [1.00, 1.00, 0.60],
+    "text": [0.895, 1.00, 0.905]
+  },
+
+  "fig2_scale_curve_behaviour_core": {
+    "_source": "results/FINDINGS_final.md (git HEAD) 'Scale curve' table, 'core behav(visible)' column.",
+    "sizes_b": [20, 32, 32, 70],
+    "labels": ["gpt-oss-20B", "qwen3-32B", "deepseek-32B", "llama-70B"],
+    "behav_core": [0.97, 0.84, 0.98, 1.00]
+  },
+
+  "fig3_textcontrolled_delta_gpt_oss_20b": {
+    "_source": "Core: REPRODUCED from /tmp/narc/slice via narcbench_textctrl.py (delta +0.102, floor95 0.219, n=108). Stego & Transfer: transcribed from audited results/FINDINGS_final.md / results/rebuttal_reproduction.md (git HEAD) -- NOT reproducible from the current thinned slice (see _unreproducible).",
+    "_repro_cmd": "python src/narcbench/narcbench_textctrl.py --root /tmp/narc/slice --model gpt_oss_20b --tier core --contrast emergent --n-perm 80",
+    "_unreproducible": "Stego colluder-vs-honest and Transfer emergent are single-class in the current /tmp/narc/slice (stego: honest/control only; transfer: honest/control only), so their delta/floor cannot be regenerated locally; values are the audited full-dataset numbers from FINDINGS_final.md.",
+    "conditions": ["Core\nemergent", "Stego\n(beyond text+bets)", "Transfer\n(beyond text)"],
+    "delta": [0.102, 0.059, 0.095],
+    "floor95": [0.219, 0.158, 0.343],
+    "reproduced": [true, false, false]
+  }
+}

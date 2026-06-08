@@ -1,0 +1,134 @@
+{
+  "experiment": "mec_steganalysis_presence_fpr",
+  "question": "key-agnostic FPR-constrained detection of MEC stego PRESENCE from internal state",
+  "model": "mistralai/Mistral-7B-v0.1",
+  "load": "fp16",
+  "device": "cuda",
+  "n_stego": 600,
+  "n_control": 600,
+  "n_total": 1200,
+  "gen_len": 24,
+  "stego_pos": 4,
+  "prompt": "The weather today is",
+  "n_layers": 32,
+  "n_layers_probed": 5,
+  "pca": 30,
+  "n_boot": 1000,
+  "n_perm": 200,
+  "token_buckets": 16,
+  "presence_balance": 0.5,
+  "length_mean_stego": 24.0,
+  "length_mean_control": 24.0,
+  "black_box": {
+    "presence_auroc": {
+      "point": 0.4888,
+      "lo": 0.4571,
+      "hi": 0.5193,
+      "n_boot": 1000
+    },
+    "tpr@1%fpr": {
+      "point": 0.015,
+      "lo": 0.0032,
+      "hi": 0.031,
+      "n_boot": 1000
+    },
+    "tpr@5%fpr": {
+      "point": 0.0617,
+      "lo": 0.0377,
+      "hi": 0.082,
+      "n_boot": 1000
+    }
+  },
+  "white_box": {
+    "best_layer": 20,
+    "best_probe": "mlp",
+    "raw": {
+      "probe": "mlp",
+      "auroc": {
+        "point": 0.5137,
+        "lo": 0.4809,
+        "hi": 0.5447,
+        "n_boot": 1000
+      },
+      "auroc_hanley_mcneil": {
+        "point": 0.5137,
+        "lo": 0.4811,
+        "hi": 0.5464,
+        "se": 0.0167
+      },
+      "tpr@1%fpr": {
+        "point": 0.0067,
+        "lo": 0.0,
+        "hi": 0.0153,
+        "n_boot": 1000
+      },
+      "tpr@5%fpr": {
+        "point": 0.0633,
+        "lo": 0.0273,
+        "hi": 0.099,
+        "n_boot": 1000
+      },
+      "permutation_floor95": 0.5322,
+      "permutation_p": 0.325
+    },
+    "residualized": {
+      "probe": "mlp",
+      "auroc": {
+        "point": 0.4946,
+        "lo": 0.4626,
+        "hi": 0.5282,
+        "n_boot": 1000
+      },
+      "auroc_hanley_mcneil": {
+        "point": 0.4946,
+        "lo": 0.4619,
+        "hi": 0.5273,
+        "se": 0.0167
+      },
+      "tpr@1%fpr": {
+        "point": 0.0117,
+        "lo": 0.0,
+        "hi": 0.029,
+        "n_boot": 1000
+      },
+      "tpr@5%fpr": {
+        "point": 0.065,
+        "lo": 0.0332,
+        "hi": 0.0863,
+        "n_boot": 1000
+      },
+      "permutation_floor95": 0.533,
+      "permutation_p": 0.58,
+      "n_perm_used": 200
+    },
+    "layer_curve": [
+      {
+        "layer": 8,
+        "auroc_linear": 0.4881,
+        "auroc_mlp": 0.4753
+      },
+      {
+        "layer": 12,
+        "auroc_linear": 0.4808,
+        "auroc_mlp": 0.5033
+      },
+      {
+        "layer": 16,
+        "auroc_linear": 0.4772,
+        "auroc_mlp": 0.4458
+      },
+      {
+        "layer": 20,
+        "auroc_linear": 0.5098,
+        "auroc_mlp": 0.5137
+      },
+      {
+        "layer": 24,
+        "auroc_linear": 0.5093,
+        "auroc_mlp": 0.5054
+      }
+    ]
+  },
+  "verdict": "OUTPUT_NULL_WHITEBOX_AT_CHANCE",
+  "wall_seconds": 1062.9
+}

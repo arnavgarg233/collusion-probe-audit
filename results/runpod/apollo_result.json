@@ -1,0 +1,34 @@
+{
+  "ai_liar": {
+    "verdict": "ERROR",
+    "error": "Some modules are dispatched on the CPU or the disk. Make sure you have enough GPU RAM to fit the quantized model. If you want to dispatch the model on the CPU or the disk while keeping these modules in 32-bit, you need to set `llm_int8_enable_fp32_cpu_offload=True` and pass a custom `device_map` to `from_pretrained`. Check https://huggingface.co/docs/transformers/main/en/main_classes/quantization#offload-between-cpu-and-gpu for more details. "
+  },
+  "how_to_catch_an_ai_liar": {
+    "n": 0,
+    "pos": 0,
+    "verdict": "SKIP_UNPARSED_OR_SINGLECLASS"
+  },
+  "insider_trading": {
+    "n": 0,
+    "pos": 0,
+    "verdict": "SKIP_UNPARSED_OR_SINGLECLASS"
+  },
+  "insider_trading_dd": {
+    "n": 0,
+    "pos": 0,
+    "verdict": "SKIP_UNPARSED_OR_SINGLECLASS"
+  },
+  "roleplaying": {
+    "verdict": "ERROR",
+    "error": "Some modules are dispatched on the CPU or the disk. Make sure you have enough GPU RAM to fit the quantized model. If you want to dispatch the model on the CPU or the disk while keeping these modules in 32-bit, you need to set `llm_int8_enable_fp32_cpu_offload=True` and pass a custom `device_map` to `from_pretrained`. Check https://huggingface.co/docs/transformers/main/en/main_classes/quantization#offload-between-cpu-and-gpu for more details. "
+  },
+  "sandbagging_v2": {
+    "verdict": "ERROR",
+    "error": "Some modules are dispatched on the CPU or the disk. Make sure you have enough GPU RAM to fit the quantized model. If you want to dispatch the model on the CPU or the disk while keeping these modules in 32-bit, you need to set `llm_int8_enable_fp32_cpu_offload=True` and pass a custom `device_map` to `from_pretrained`. Check https://huggingface.co/docs/transformers/main/en/main_classes/quantization#offload-between-cpu-and-gpu for more details. "
+  },
+  "werewolf": {
+    "n": 0,
+    "pos": 0,
+    "verdict": "SKIP_UNPARSED_OR_SINGLECLASS"
+  }
+}

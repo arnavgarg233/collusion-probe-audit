@@ -1,0 +1,14 @@
+setting,p,bh_qvalue,bonferroni_sig,fdr_sig
+gpt_oss_core,0.188,0.806,False,False
+qwen3_core,0.95,1.0,False,False
+qwen3_transfer,1.0,1.0,False,False
+liars_convincing,0.62,0.806,False,False
+liars_gender,0.98,1.0,False,False
+sleeper_agent,0.41,0.806,False,False
+backdoorllm,0.55,0.806,False,False
+b2w_ai_liar,0.47,0.806,False,False
+b2w_dilution,0.38,0.806,False,False
+b2w_insider,0.52,0.806,False,False
+b2w_sandbagging,0.6,0.806,False,False
+gemma_pwd,0.44,0.806,False,False
+b2w_apps_backdoor,0.025,0.325,False,False

@@ -1,0 +1,60 @@
+{
+  "experiment": "controlled_delta_vs_direct_cmi",
+  "thesis": "the access-fair AUROC controlled delta is a calibrated estimator of I(Y;A|B): confounded cells sit in the CMI permutation null; the sandbagging/apps wins are CMI>>0.",
+  "n_perm": 30,
+  "n_boot": 60,
+  "k_knn": 5,
+  "npeet_available": false,
+  "cells": {
+    "apps_backdoors": {
+      "n": 150,
+      "y_kind": "binary",
+      "b_kind": "text_oof_score",
+      "note": "b2w apps_backdoors: A=act-probe OOF, B=full-access text OOF (same scores the delta uses)",
+      "delta": {
+        "base": 0.6282,
+        "act": 0.8908,
+        "full": 0.8912,
+        "delta": 0.263,
+        "floor95": 0.0709,
+        "p": 0.0,
+        "verdict": "WHITE_BOX_WINS"
+      },
+      "cmi_knn": {
+        "point": 0.33785,
+        "floor95": 0.06658,
+        "p": 0.0,
+        "ci_lo": 0.25204,
+        "ci_hi": 0.49896,
+        "n_perm": 30,
+        "n_boot": 60,
+        "above_null": true
+      },
+      "cmi_disc": {
+        "point": 0.69779,
+        "floor95": 0.33044,
+        "p": 0.0,
+        "ci_lo": 0.48177,
+        "ci_hi": 0.79226,
+        "n_perm": 30,
+        "n_boot": 60,
+        "above_null": true
+      },
+      "cmi_mine": {
+        "point": null,
+        "floor95": null,
+        "p": null,
+        "ci_lo": null,
+        "ci_hi": null,
+        "n_perm": 0,
+        "n_boot": 0,
+        "above_null": null
+      }
+    }
+  },
+  "summary": {
+    "spearman_rho": null,
+    "spearman_p": null,
+    "n_cells": 1
+  }
+}

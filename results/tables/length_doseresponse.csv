@@ -1,0 +1,6 @@
+lambda_length_removed,activation_auroc
+0.0,0.998
+0.25,0.997
+0.5,0.991
+0.75,0.923
+1.0,0.615

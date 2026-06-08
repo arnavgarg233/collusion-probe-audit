@@ -1,0 +1,7 @@
+model,detector,auroc,tpr_at_1pct_fpr,tpr_at_5pct_fpr,n,pos
+gpt_oss_20b,full-access text (transcript),0.861,0.167,0.167,108,36
+gpt_oss_20b,activation,0.963,0.667,0.722,108,36
+gpt_oss_20b,combined,0.963,0.667,0.722,108,36
+qwen3_32b,full-access text (transcript),0.980,0.870,0.870,170,46
+qwen3_32b,activation,0.862,0.047,0.500,170,46
+qwen3_32b,combined,0.862,0.087,0.500,170,46

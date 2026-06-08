@@ -1,0 +1,5 @@
+model,tier,contrast,n,act_auroc,text_auroc,text_plus_act,delta,verdict,floor95,p
+gpt_oss_20b,core,emergent_textctrl_corrected,108,0.963,0.861,0.963,0.102,confounded,0.219,0.188
+gpt_oss_20b,core,colluder_textctrl_corrected,144,0.999,0.325,0.999,0.675,GO_vote-confounded,0.092,0.0
+qwen3_32b,core,emergent_textctrl_corrected,170,0.862,0.98,0.862,-0.119,confounded,0.12,0.925
+qwen3_32b,core,colluder_textctrl_corrected,216,1.0,0.653,1.0,0.347,GO_vote-confounded,0.099,0.0
