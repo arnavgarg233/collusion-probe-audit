@@ -1,0 +1,23 @@
+{
+  "_doc": "Controlled-delta protocol used for every setting (Section 3 of the paper).",
+  "estimand": "delta = AUROC(visible + activation) - AUROC(visible), pooled out of fold",
+  "cross_validation": {
+    "splitter": "GroupKFold",
+    "n_splits": 5,
+    "groups": "scenario_id (emergent) or run_id (colluder); dataset group elsewhere"
+  },
+  "stacking": "text score enters as an inner out-of-fold prediction on the training fold only",
+  "activation_pca_max": 30,
+  "logistic_C": 0.5,
+  "permutation_floor": {
+    "scheme": "group-block label shuffle",
+    "percentile": 95,
+    "n_perm_narcbench": 80
+  },
+  "min_effect": 0.1,
+  "verdict": {
+    "WHITE_BOX_WINS": "delta > floor95 and delta >= min_effect",
+    "CONFOUNDED": "delta <= floor95",
+    "PARTIAL": "floor95 < delta < min_effect"
+  }
+}

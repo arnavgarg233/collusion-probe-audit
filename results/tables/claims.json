@@ -1,0 +1,3571 @@
+{
+ "_doc": "Every number the paper states, with its place in the paper and the record it comes from. Checked by scripts/verify_claims.py; see src/collusion_probe_audit/claims.py for the source and comparison syntax.",
+ "paper": "An access-fair fusion test for white-box monitoring of deceptive language models",
+ "claims": [
+  {
+   "id": "C-ABS-PRIOR-AUROC",
+   "where": "Abstract; Sec. 1 (detectors report AUROC 0.9 to 1.0; NARCBench reports 1.0)",
+   "checks": [
+    {
+     "paper": "0.9-1.0",
+     "what": "reproduced probe AUROCs lie in [0.9, 1.0]",
+     "source": [
+      {
+       "json": "narcbench/technique_reproduction.json",
+       "key": "technique_reproduction_gpt_oss_20b.best_technique_auroc"
+      },
+      {
+       "csv": "narcbench/gapfill_corrected.csv",
+       "where": {
+        "model": "gpt_oss_20b",
+        "contrast": "colluder_textctrl_corrected"
+       },
+       "col": "act_auroc"
+      },
+      {
+       "csv": "narcbench/gapfill_corrected.csv",
+       "where": {
+        "model": "qwen3_32b",
+        "contrast": "colluder_textctrl_corrected"
+       },
+       "col": "act_auroc"
+      },
+      {
+       "csv": "narcbench/gapfill_corrected.csv",
+       "where": {
+        "model": "gpt_oss_20b",
+        "contrast": "emergent_textctrl_corrected"
+       },
+       "col": "act_auroc"
+      }
+     ],
+     "cmp": "within"
+    },
+    {
+     "paper": "1.0",
+     "what": "reproduced best technique, core",
+     "source": {
+      "json": "narcbench/technique_reproduction.json",
+      "key": "technique_reproduction_gpt_oss_20b.best_technique_auroc.0"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-SETTINGS-COUNT",
+   "where": "Abstract; Secs. 1, 2, 5 (fifteen settings: eleven confounded, four white-box wins)",
+   "checks": [
+    {
+     "paper": "15",
+     "what": "",
+     "source": {
+      "derive": "n_settings",
+      "args": []
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "11",
+     "what": "",
+     "source": {
+      "derive": "n_verdict",
+      "args": [
+       "CONFOUNDED"
+      ]
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "4",
+     "what": "",
+     "source": {
+      "derive": "n_verdict",
+      "args": [
+       "WHITE_BOX_WINS"
+      ]
+     },
+     "cmp": "exact"
+    }
+   ]
+  },
+  {
+   "id": "C-ABS-SANDBAG",
+   "where": "Abstract; highlights; Secs. 1, 6, 8 (hidden answer at AUROC 0.99 / 0.987, visible answer always wrong)",
+   "checks": [
+    {
+     "paper": "0.99",
+     "what": "",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.24.auroc"
+     }
+    },
+    {
+     "paper": "0.987",
+     "what": "",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.24.auroc"
+     }
+    },
+    {
+     "paper": "0",
+     "what": "visible accuracy on the sandbagged subset",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.visible_acc_on_sandbagged"
+     },
+     "cmp": "exact"
+    }
+   ]
+  },
+  {
+   "id": "C-ABS-BACKDOOR",
+   "where": "Abstract; Sec. 1 (code backdoor flagged at 1% FPR where a text monitor flags none)",
+   "checks": [
+    {
+     "paper": "0.000",
+     "what": "",
+     "source": {
+      "csv": "breadth/fpr_b2w_large.csv",
+      "where": {
+       "dataset": "apps_backdoors",
+       "detector": "full-access text"
+      },
+      "col": "tpr_at_1pct_fpr"
+     }
+    },
+    {
+     "paper": "36.8%",
+     "what": "activation probe at 1% FPR",
+     "source": {
+      "csv": "breadth/fpr_b2w_large.csv",
+      "where": {
+       "dataset": "apps_backdoors",
+       "detector": "activation probe"
+      },
+      "col": "tpr_at_1pct_fpr"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-INTRO-QUANT",
+   "where": "Sec. 1 (decode survives int8 and nf4: AUROC 0.98 to 0.99)",
+   "checks": [
+    {
+     "paper": "0.98-0.99",
+     "what": "",
+     "source": {
+      "derive": "sandbag_values",
+      "args": [
+       "auroc",
+       [
+        "int8",
+        "nf4"
+       ],
+       [
+        24,
+        28,
+        30
+       ]
+      ]
+     },
+     "cmp": "range"
+    }
+   ]
+  },
+  {
+   "id": "C-INTRO-STEGANALYSIS",
+   "where": "Sec. 1 (key-agnostic steganalysis at chance, 0.51)",
+   "checks": [
+    {
+     "paper": "0.51",
+     "what": "",
+     "source": {
+      "json": "stego/mec_steganalysis_presence_fpr.json",
+      "key": "white_box.raw.auroc.point"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-PROTOCOL",
+   "where": "Sec. 3 and Box 'Access-Fair White-Box Audit' (95th-percentile floor, effect size 0.10, PCA <= 30)",
+   "checks": [
+    {
+     "paper": "95",
+     "what": "",
+     "source": {
+      "json": "../../../configs/estimator.json",
+      "key": "permutation_floor.percentile"
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "0.10",
+     "what": "",
+     "source": {
+      "json": "../../../configs/estimator.json",
+      "key": "min_effect"
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "30",
+     "what": "",
+     "source": {
+      "json": "../../../configs/estimator.json",
+      "key": "activation_pca_max"
+     },
+     "cmp": "exact"
+    }
+   ]
+  },
+  {
+   "id": "C-WIN-MARGIN",
+   "where": "Sec. 3 (every credited win has delta above 0.15)",
+   "checks": [
+    {
+     "paper": "0.15",
+     "what": "",
+     "source": {
+      "derive": "min_win_delta",
+      "args": []
+     },
+     "cmp": "gt"
+    }
+   ]
+  },
+  {
+   "id": "C-THRESHOLDS",
+   "where": "Sec. 3 (threshold sensitivity recomputed from the records: only password-locked Gemma depends on the cutoff)",
+   "checks": [
+    {
+     "paper": "5",
+     "what": "settings credited at 0.05",
+     "source": {
+      "derive": "n_wins_at_threshold",
+      "args": [
+       0.05
+      ]
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "1",
+     "what": "the extra credit at 0.05 is password-locked Gemma",
+     "source": {
+      "derive": "only_extra_win_at",
+      "args": [
+       0.05,
+       "gemma_pwd"
+      ]
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "4",
+     "what": "settings credited at 0.10",
+     "source": {
+      "derive": "n_wins_at_threshold",
+      "args": [
+       0.1
+      ]
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "4",
+     "what": "settings credited at 0.15",
+     "source": {
+      "derive": "n_wins_at_threshold",
+      "args": [
+       0.15
+      ]
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "10",
+     "what": "every other confounded cell is below its floor",
+     "source": {
+      "derive": "n_confounded_below_floor",
+      "args": []
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "+0.076",
+     "what": "Gemma pwd L28 delta",
+     "source": {
+      "json": "sandbagging/org_gemma_pwd.json",
+      "key": "layers.28.delta"
+     }
+    },
+    {
+     "paper": "0.071",
+     "what": "Gemma pwd L28 floor",
+     "source": {
+      "json": "sandbagging/org_gemma_pwd.json",
+      "key": "layers.28.floor95"
+     }
+    },
+    {
+     "paper": "+0.066",
+     "what": "Gemma pwd L32 delta",
+     "source": {
+      "json": "sandbagging/org_gemma_pwd.json",
+      "key": "layers.32.delta"
+     }
+    },
+    {
+     "paper": "0.056",
+     "what": "Gemma pwd L32 floor",
+     "source": {
+      "json": "sandbagging/org_gemma_pwd.json",
+      "key": "layers.32.floor95"
+     }
+    },
+    {
+     "paper": "0.10",
+     "what": "Gemma pwd never reaches the 0.10 margin",
+     "source": {
+      "derive": "max_gemma_pwd_delta",
+      "args": []
+     },
+     "cmp": "lt"
+    }
+   ]
+  },
+  {
+   "id": "C-FLOOR-TABLE",
+   "where": "Table 1 (permutation floor by setting and n)",
+   "checks": [
+    {
+     "paper": "108",
+     "what": "",
+     "source": {
+      "csv": "narcbench/gapfill_corrected.csv",
+      "where": {
+       "model": "gpt_oss_20b",
+       "contrast": "emergent_textctrl_corrected"
+      },
+      "col": "n"
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "0.219",
+     "what": "",
+     "source": {
+      "csv": "narcbench/gapfill_corrected.csv",
+      "where": {
+       "model": "gpt_oss_20b",
+       "contrast": "emergent_textctrl_corrected"
+      },
+      "col": "floor95"
+     }
+    },
+    {
+     "paper": "170",
+     "what": "",
+     "source": {
+      "csv": "narcbench/gapfill_corrected.csv",
+      "where": {
+       "model": "qwen3_32b",
+       "contrast": "emergent_textctrl_corrected"
+      },
+      "col": "n"
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "0.120",
+     "what": "",
+     "source": {
+      "csv": "narcbench/gapfill_corrected.csv",
+      "where": {
+       "model": "qwen3_32b",
+       "contrast": "emergent_textctrl_corrected"
+      },
+      "col": "floor95"
+     }
+    },
+    {
+     "paper": "144-216",
+     "what": "",
+     "source": [
+      {
+       "csv": "narcbench/gapfill_corrected.csv",
+       "where": {
+        "model": "gpt_oss_20b",
+        "contrast": "colluder_textctrl_corrected"
+       },
+       "col": "n"
+      },
+      {
+       "csv": "narcbench/gapfill_corrected.csv",
+       "where": {
+        "model": "qwen3_32b",
+        "contrast": "colluder_textctrl_corrected"
+       },
+       "col": "n"
+      }
+     ],
+     "cmp": "range"
+    },
+    {
+     "paper": "0.092-0.099",
+     "what": "",
+     "source": [
+      {
+       "csv": "narcbench/gapfill_corrected.csv",
+       "where": {
+        "model": "gpt_oss_20b",
+        "contrast": "colluder_textctrl_corrected"
+       },
+       "col": "floor95"
+      },
+      {
+       "csv": "narcbench/gapfill_corrected.csv",
+       "where": {
+        "model": "qwen3_32b",
+        "contrast": "colluder_textctrl_corrected"
+       },
+       "col": "floor95"
+      }
+     ],
+     "cmp": "range"
+    },
+    {
+     "paper": "205",
+     "what": "",
+     "source": {
+      "json": "sandbagging/sandbag_access_fair.json",
+      "key": "n_sandbagged"
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "0.08-0.08",
+     "what": "sandbagging floor ~0.08",
+     "source": {
+      "derive": "access_fair_floors",
+      "args": []
+     },
+     "cmp": "range"
+    }
+   ]
+  },
+  {
+   "id": "C-POSITIVE-CONTROL",
+   "where": "Sec. 3 (calibrated positive control first credited at ~0.36 bits, delta +0.166 vs floor 0.069; redundant carrier never credited)",
+   "checks": [
+    {
+     "paper": "0.36",
+     "what": "",
+     "source": {
+      "derive": "calibration_first_credited",
+      "args": [
+       "informative"
+      ]
+     }
+    },
+    {
+     "paper": "+0.166",
+     "what": "",
+     "source": {
+      "derive": "calibration_first_credited_field",
+      "args": [
+       "informative",
+       "delta"
+      ]
+     }
+    },
+    {
+     "paper": "+0.166",
+     "what": "recomputed from out-of-fold scores",
+     "source": {
+      "derive": "calibration_delta_from_oof",
+      "args": [
+       "informative",
+       "0.4"
+      ]
+     }
+    },
+    {
+     "paper": "0.069",
+     "what": "",
+     "source": {
+      "derive": "calibration_first_credited_field",
+      "args": [
+       "informative",
+       "floor95"
+      ]
+     }
+    },
+    {
+     "paper": "-1",
+     "what": "redundant arm never credited",
+     "source": {
+      "derive": "calibration_first_credited",
+      "args": [
+       "redundant"
+      ]
+     },
+     "cmp": "exact"
+    }
+   ]
+  },
+  {
+   "id": "C-T2-GPTOSS-EMERGENT",
+   "where": "Table 2 and Sec. 4 (gpt_oss_20b core emergent; gapfill_corrected.csv)",
+   "checks": [
+    {
+     "paper": "108",
+     "what": "n",
+     "source": {
+      "csv": "narcbench/gapfill_corrected.csv",
+      "where": {
+       "model": "gpt_oss_20b",
+       "contrast": "emergent_textctrl_corrected"
+      },
+      "col": "n"
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "0.963",
+     "what": "activation AUROC",
+     "source": {
+      "csv": "narcbench/gapfill_corrected.csv",
+      "where": {
+       "model": "gpt_oss_20b",
+       "contrast": "emergent_textctrl_corrected"
+      },
+      "col": "act_auroc"
+     }
+    },
+    {
+     "paper": "0.861",
+     "what": "visible baseline",
+     "source": {
+      "csv": "narcbench/gapfill_corrected.csv",
+      "where": {
+       "model": "gpt_oss_20b",
+       "contrast": "emergent_textctrl_corrected"
+      },
+      "col": "text_auroc"
+     }
+    },
+    {
+     "paper": "+0.102",
+     "what": "delta",
+     "source": {
+      "csv": "narcbench/gapfill_corrected.csv",
+      "where": {
+       "model": "gpt_oss_20b",
+       "contrast": "emergent_textctrl_corrected"
+      },
+      "col": "delta"
+     }
+    },
+    {
+     "paper": "0.219",
+     "what": "floor95",
+     "source": {
+      "csv": "narcbench/gapfill_corrected.csv",
+      "where": {
+       "model": "gpt_oss_20b",
+       "contrast": "emergent_textctrl_corrected"
+      },
+      "col": "floor95"
+     }
+    },
+    {
+     "paper": "0.188",
+     "what": "p",
+     "source": {
+      "csv": "narcbench/gapfill_corrected.csv",
+      "where": {
+       "model": "gpt_oss_20b",
+       "contrast": "emergent_textctrl_corrected"
+      },
+      "col": "p"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-T2-QWEN3-EMERGENT",
+   "where": "Table 2 and Sec. 4 (qwen3_32b core emergent; natural_subsat.csv)",
+   "checks": [
+    {
+     "paper": "170",
+     "what": "n",
+     "source": {
+      "csv": "narcbench/natural_subsat.csv",
+      "where": {
+       "model": "qwen3_32b",
+       "tier": "core",
+       "contrast": "emergent"
+      },
+      "col": "n"
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "0.862",
+     "what": "activation AUROC",
+     "source": {
+      "csv": "narcbench/natural_subsat.csv",
+      "where": {
+       "model": "qwen3_32b",
+       "tier": "core",
+       "contrast": "emergent"
+      },
+      "col": "act_auroc"
+     }
+    },
+    {
+     "paper": "0.980",
+     "what": "visible baseline",
+     "source": {
+      "csv": "narcbench/natural_subsat.csv",
+      "where": {
+       "model": "qwen3_32b",
+       "tier": "core",
+       "contrast": "emergent"
+      },
+      "col": "text_visible_auroc"
+     }
+    },
+    {
+     "paper": "-0.118",
+     "what": "delta",
+     "source": {
+      "csv": "narcbench/natural_subsat.csv",
+      "where": {
+       "model": "qwen3_32b",
+       "tier": "core",
+       "contrast": "emergent"
+      },
+      "col": "delta"
+     }
+    },
+    {
+     "paper": "0.120",
+     "what": "floor95",
+     "source": {
+      "csv": "narcbench/natural_subsat.csv",
+      "where": {
+       "model": "qwen3_32b",
+       "tier": "core",
+       "contrast": "emergent"
+      },
+      "col": "delta_floor95"
+     }
+    },
+    {
+     "paper": "0.950",
+     "what": "p",
+     "source": {
+      "csv": "narcbench/natural_subsat.csv",
+      "where": {
+       "model": "qwen3_32b",
+       "tier": "core",
+       "contrast": "emergent"
+      },
+      "col": "delta_p"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-T2-GPTOSS-COLLUDER",
+   "where": "Table 2 and Sec. 4 (gpt_oss_20b core colluder; gapfill_corrected.csv)",
+   "checks": [
+    {
+     "paper": "144",
+     "what": "n",
+     "source": {
+      "csv": "narcbench/gapfill_corrected.csv",
+      "where": {
+       "model": "gpt_oss_20b",
+       "contrast": "colluder_textctrl_corrected"
+      },
+      "col": "n"
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "0.999",
+     "what": "activation AUROC",
+     "source": {
+      "csv": "narcbench/gapfill_corrected.csv",
+      "where": {
+       "model": "gpt_oss_20b",
+       "contrast": "colluder_textctrl_corrected"
+      },
+      "col": "act_auroc"
+     }
+    },
+    {
+     "paper": "0.325",
+     "what": "visible baseline",
+     "source": {
+      "csv": "narcbench/gapfill_corrected.csv",
+      "where": {
+       "model": "gpt_oss_20b",
+       "contrast": "colluder_textctrl_corrected"
+      },
+      "col": "text_auroc"
+     }
+    },
+    {
+     "paper": "+0.675",
+     "what": "delta",
+     "source": {
+      "csv": "narcbench/gapfill_corrected.csv",
+      "where": {
+       "model": "gpt_oss_20b",
+       "contrast": "colluder_textctrl_corrected"
+      },
+      "col": "delta"
+     }
+    },
+    {
+     "paper": "0.092",
+     "what": "floor95",
+     "source": {
+      "csv": "narcbench/gapfill_corrected.csv",
+      "where": {
+       "model": "gpt_oss_20b",
+       "contrast": "colluder_textctrl_corrected"
+      },
+      "col": "floor95"
+     }
+    },
+    {
+     "paper": "0.000",
+     "what": "p",
+     "source": {
+      "csv": "narcbench/gapfill_corrected.csv",
+      "where": {
+       "model": "gpt_oss_20b",
+       "contrast": "colluder_textctrl_corrected"
+      },
+      "col": "p"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-T2-QWEN3-COLLUDER",
+   "where": "Table 2 and Sec. 4 (qwen3_32b core colluder; gapfill_corrected.csv)",
+   "checks": [
+    {
+     "paper": "216",
+     "what": "n",
+     "source": {
+      "csv": "narcbench/gapfill_corrected.csv",
+      "where": {
+       "model": "qwen3_32b",
+       "contrast": "colluder_textctrl_corrected"
+      },
+      "col": "n"
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "1.000",
+     "what": "activation AUROC",
+     "source": {
+      "csv": "narcbench/gapfill_corrected.csv",
+      "where": {
+       "model": "qwen3_32b",
+       "contrast": "colluder_textctrl_corrected"
+      },
+      "col": "act_auroc"
+     }
+    },
+    {
+     "paper": "0.653",
+     "what": "visible baseline",
+     "source": {
+      "csv": "narcbench/gapfill_corrected.csv",
+      "where": {
+       "model": "qwen3_32b",
+       "contrast": "colluder_textctrl_corrected"
+      },
+      "col": "text_auroc"
+     }
+    },
+    {
+     "paper": "+0.347",
+     "what": "delta",
+     "source": {
+      "csv": "narcbench/gapfill_corrected.csv",
+      "where": {
+       "model": "qwen3_32b",
+       "contrast": "colluder_textctrl_corrected"
+      },
+      "col": "delta"
+     }
+    },
+    {
+     "paper": "0.099",
+     "what": "floor95",
+     "source": {
+      "csv": "narcbench/gapfill_corrected.csv",
+      "where": {
+       "model": "qwen3_32b",
+       "contrast": "colluder_textctrl_corrected"
+      },
+      "col": "floor95"
+     }
+    },
+    {
+     "paper": "0.000",
+     "what": "p",
+     "source": {
+      "csv": "narcbench/gapfill_corrected.csv",
+      "where": {
+       "model": "qwen3_32b",
+       "contrast": "colluder_textctrl_corrected"
+      },
+      "col": "p"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-VOTE-BASELINE",
+   "where": "Sec. 4 and Table 2 footnote (vote-inclusive behaviour baseline ~1.0; votes 1.00 on core, bet spread 1.00 on stego)",
+   "checks": [
+    {
+     "paper": "1.00",
+     "what": "",
+     "source": {
+      "json": "narcbench/technique_reproduction.json",
+      "key": "technique_reproduction_gpt_oss_20b.visible_behaviour_auroc.0"
+     }
+    },
+    {
+     "paper": "1.00",
+     "what": "",
+     "source": {
+      "json": "narcbench/technique_reproduction.json",
+      "key": "technique_reproduction_gpt_oss_20b.visible_behaviour_auroc.1"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-QWEN3-TEXT-ALIGNED",
+   "where": "Sec. 4 (Qwen3 core baseline reproduces at 0.970 on the n=78 text-aligned subset)",
+   "checks": [
+    {
+     "paper": "0.970",
+     "what": "",
+     "source": {
+      "csv": "narcbench/dim_sweep_qwen3_accessfair.csv",
+      "where": {
+       "pca_dim": "30"
+      },
+      "col": "base_full_access"
+     }
+    },
+    {
+     "paper": "78",
+     "what": "",
+     "source": {
+      "csv": "narcbench/dim_sweep_qwen3_accessfair.csv",
+      "where": {
+       "pca_dim": "30"
+      },
+      "col": "n"
+     },
+     "cmp": "exact"
+    }
+   ]
+  },
+  {
+   "id": "C-REPRODUCTION",
+   "where": "Sec. 4 (probe reproduction on gpt-oss: 1.00 core, 1.00 stego, up to 0.98 transfer)",
+   "checks": [
+    {
+     "paper": "1.00",
+     "what": "",
+     "source": {
+      "json": "narcbench/technique_reproduction.json",
+      "key": "technique_reproduction_gpt_oss_20b.best_technique_auroc.0"
+     }
+    },
+    {
+     "paper": "1.00",
+     "what": "",
+     "source": {
+      "json": "narcbench/technique_reproduction.json",
+      "key": "technique_reproduction_gpt_oss_20b.best_technique_auroc.1"
+     }
+    },
+    {
+     "paper": "0.98",
+     "what": "",
+     "source": {
+      "json": "narcbench/technique_reproduction.json",
+      "key": "technique_reproduction_gpt_oss_20b.best_technique_auroc.2"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-T3-JUDGE",
+   "where": "Table 3 and Secs. 4, 7 (Qwen2.5-32B transcript judge; GPT-5.5 supplementary judge)",
+   "checks": [
+    {
+     "paper": "0.954",
+     "what": "",
+     "source": {
+      "regex": "narcbench/judge2.log",
+      "pattern": "gpt_oss_20b/core emergent \\| JUDGE=([0-9.]+)"
+     }
+    },
+    {
+     "paper": "+0.021",
+     "what": "",
+     "source": {
+      "regex": "narcbench/judge2.log",
+      "pattern": "gpt_oss_20b/core emergent .*delta=\\+([0-9.]+)"
+     }
+    },
+    {
+     "paper": "0.02",
+     "what": "Discussion: ~0.02 AUROC",
+     "source": {
+      "regex": "narcbench/judge2.log",
+      "pattern": "gpt_oss_20b/core emergent .*delta=\\+([0-9.]+)"
+     }
+    },
+    {
+     "paper": "0.659",
+     "what": "",
+     "source": {
+      "regex": "narcbench/judge2.log",
+      "pattern": "qwen3_32b/core emergent \\| JUDGE=([0-9.]+)"
+     }
+    },
+    {
+     "paper": "+0.061",
+     "what": "",
+     "source": {
+      "regex": "narcbench/judge2.log",
+      "pattern": "qwen3_32b/core emergent .*delta=\\+([0-9.]+)"
+     }
+    },
+    {
+     "paper": "0.849",
+     "what": "",
+     "source": {
+      "csv": "narcbench/baseline_sensitivity.csv",
+      "where": {
+       "strength": "frontier"
+      },
+      "col": "base"
+     }
+    },
+    {
+     "paper": "+0.115",
+     "what": "",
+     "source": {
+      "csv": "narcbench/baseline_sensitivity.csv",
+      "where": {
+       "strength": "frontier"
+      },
+      "col": "delta"
+     }
+    },
+    {
+     "paper": "0.120",
+     "what": "",
+     "source": {
+      "csv": "narcbench/baseline_sensitivity.csv",
+      "where": {
+       "strength": "frontier"
+      },
+      "col": "floor95"
+     }
+    },
+    {
+     "paper": "0.065",
+     "what": "",
+     "source": {
+      "csv": "narcbench/baseline_sensitivity.csv",
+      "where": {
+       "strength": "frontier"
+      },
+      "col": "p"
+     }
+    },
+    {
+     "paper": "0.96",
+     "what": "uncontrolled probe scores above 0.96",
+     "source": {
+      "csv": "narcbench/gapfill_corrected.csv",
+      "where": {
+       "model": "gpt_oss_20b",
+       "contrast": "emergent_textctrl_corrected"
+      },
+      "col": "act_auroc"
+     },
+     "cmp": "gt"
+    }
+   ]
+  },
+  {
+   "id": "C-T4-BASELINE-SWEEP",
+   "where": "Table 4 and Sec. 4 (sensitivity to text-baseline strength)",
+   "checks": [
+    {
+     "paper": "0.769",
+     "what": "cap 50 base",
+     "source": {
+      "csv": "narcbench/baseline_sensitivity.csv",
+      "where": {
+       "baseline": "tfidf",
+       "strength": "50"
+      },
+      "col": "base"
+     }
+    },
+    {
+     "paper": "+0.195",
+     "what": "cap 50 delta",
+     "source": {
+      "csv": "narcbench/baseline_sensitivity.csv",
+      "where": {
+       "baseline": "tfidf",
+       "strength": "50"
+      },
+      "col": "delta"
+     }
+    },
+    {
+     "paper": "0.005",
+     "what": "cap 50 p",
+     "source": {
+      "csv": "narcbench/baseline_sensitivity.csv",
+      "where": {
+       "baseline": "tfidf",
+       "strength": "50"
+      },
+      "col": "p"
+     }
+    },
+    {
+     "paper": "0.830",
+     "what": "cap 150 base",
+     "source": {
+      "csv": "narcbench/baseline_sensitivity.csv",
+      "where": {
+       "baseline": "tfidf",
+       "strength": "150"
+      },
+      "col": "base"
+     }
+    },
+    {
+     "paper": "+0.133",
+     "what": "cap 150 delta",
+     "source": {
+      "csv": "narcbench/baseline_sensitivity.csv",
+      "where": {
+       "baseline": "tfidf",
+       "strength": "150"
+      },
+      "col": "delta"
+     }
+    },
+    {
+     "paper": "0.120",
+     "what": "cap 150 p",
+     "source": {
+      "csv": "narcbench/baseline_sensitivity.csv",
+      "where": {
+       "baseline": "tfidf",
+       "strength": "150"
+      },
+      "col": "p"
+     }
+    },
+    {
+     "paper": "0.867",
+     "what": "cap 500 base",
+     "source": {
+      "csv": "narcbench/baseline_sensitivity.csv",
+      "where": {
+       "baseline": "tfidf",
+       "strength": "500"
+      },
+      "col": "base"
+     }
+    },
+    {
+     "paper": "+0.096",
+     "what": "cap 500 delta",
+     "source": {
+      "csv": "narcbench/baseline_sensitivity.csv",
+      "where": {
+       "baseline": "tfidf",
+       "strength": "500"
+      },
+      "col": "delta"
+     }
+    },
+    {
+     "paper": "0.140",
+     "what": "cap 500 p",
+     "source": {
+      "csv": "narcbench/baseline_sensitivity.csv",
+      "where": {
+       "baseline": "tfidf",
+       "strength": "500"
+      },
+      "col": "p"
+     }
+    },
+    {
+     "paper": "0.861",
+     "what": "full vocabulary",
+     "source": {
+      "csv": "narcbench/baseline_sensitivity.csv",
+      "where": {
+       "baseline": "tfidf",
+       "strength": "all"
+      },
+      "col": "base"
+     }
+    },
+    {
+     "paper": "+0.102",
+     "what": "full vocabulary",
+     "source": {
+      "csv": "narcbench/baseline_sensitivity.csv",
+      "where": {
+       "baseline": "tfidf",
+       "strength": "all"
+      },
+      "col": "delta"
+     }
+    },
+    {
+     "paper": "0.188",
+     "what": "full-vocabulary row is the Table 2 cell",
+     "source": {
+      "csv": "narcbench/gapfill_corrected.csv",
+      "where": {
+       "model": "gpt_oss_20b",
+       "contrast": "emergent_textctrl_corrected"
+      },
+      "col": "p"
+     }
+    },
+    {
+     "paper": "0.83",
+     "what": "realistic baselines have text AUROC >= 0.83",
+     "source": {
+      "derive": "tfidf_realistic_min_auroc",
+      "args": []
+     },
+     "cmp": "le"
+    },
+    {
+     "paper": "0.12",
+     "what": "realistic baselines have p >= 0.12",
+     "source": {
+      "derive": "tfidf_realistic_min_p",
+      "args": []
+     },
+     "cmp": "le"
+    },
+    {
+     "paper": "50",
+     "what": "only the 50-feature cap is significant",
+     "source": {
+      "csv": "narcbench/baseline_sensitivity.csv",
+      "where": {
+       "p": "0.005"
+      },
+      "col": "strength"
+     },
+     "cmp": "exact"
+    }
+   ]
+  },
+  {
+   "id": "C-OPERATING-NARCBENCH",
+   "where": "Sec. 4 (Qwen3 operating point: 87.0% vs 4.7% at 1% FPR; per-cell n 108 to 288, 72 negatives)",
+   "checks": [
+    {
+     "paper": "87.0%",
+     "what": "",
+     "source": {
+      "csv": "narcbench/fpr_operating_points.csv",
+      "where": {
+       "model": "qwen3_32b",
+       "detector": "full-access text (transcript)"
+      },
+      "col": "tpr_at_1pct_fpr"
+     }
+    },
+    {
+     "paper": "4.7%",
+     "what": "",
+     "source": {
+      "csv": "narcbench/fpr_operating_points.csv",
+      "where": {
+       "model": "qwen3_32b",
+       "detector": "activation"
+      },
+      "col": "tpr_at_1pct_fpr"
+     }
+    },
+    {
+     "paper": "108",
+     "what": "",
+     "source": {
+      "derive": "narcbench_n",
+      "args": [
+       "min_n"
+      ]
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "288",
+     "what": "",
+     "source": {
+      "derive": "narcbench_n",
+      "args": [
+       "max_n"
+      ]
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "72",
+     "what": "",
+     "source": {
+      "derive": "narcbench_n",
+      "args": [
+       "min_neg"
+      ]
+     },
+     "cmp": "exact"
+    }
+   ]
+  },
+  {
+   "id": "C-COLLUDEBENCH",
+   "where": "Sec. 4 (ColludeBench: n=570, 93.3% at 5% FPR, text AUROC 0.937, delta -0.087 vs floor 0.072)",
+   "checks": [
+    {
+     "paper": "570",
+     "what": "",
+     "source": {
+      "json": "breadth/colludebench_fpr.json",
+      "key": "n"
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "93.3%",
+     "what": "",
+     "source": {
+      "json": "breadth/colludebench_fpr.json",
+      "key": "op_text.tpr@5%fpr"
+     }
+    },
+    {
+     "paper": "0.937",
+     "what": "",
+     "source": {
+      "json": "breadth/colludebench_fpr.json",
+      "key": "auroc_text"
+     }
+    },
+    {
+     "paper": "-0.087",
+     "what": "",
+     "source": {
+      "json": "breadth/colludebench_fpr.json",
+      "key": "delta_combo_minus_text"
+     }
+    },
+    {
+     "paper": "0.072",
+     "what": "",
+     "source": {
+      "json": "breadth/colludebench_fpr.json",
+      "key": "delta_floor95"
+     }
+    },
+    {
+     "paper": "1",
+     "what": "1% point coincides with the 5% point",
+     "source": {
+      "derive": "colludebench_tpr1_equals_tpr5",
+      "args": []
+     },
+     "cmp": "exact"
+    }
+   ]
+  },
+  {
+   "id": "C-SCALE",
+   "where": "Sec. 4 (behaviour baseline on core across the four models)",
+   "checks": [
+    {
+     "paper": "0.97",
+     "what": "",
+     "source": {
+      "json": "narcbench/technique_reproduction.json",
+      "key": "behaviour_baseline_core_by_model.auroc.0"
+     }
+    },
+    {
+     "paper": "0.84",
+     "what": "",
+     "source": {
+      "json": "narcbench/technique_reproduction.json",
+      "key": "behaviour_baseline_core_by_model.auroc.1"
+     }
+    },
+    {
+     "paper": "0.98",
+     "what": "",
+     "source": {
+      "json": "narcbench/technique_reproduction.json",
+      "key": "behaviour_baseline_core_by_model.auroc.2"
+     }
+    },
+    {
+     "paper": "1.00",
+     "what": "",
+     "source": {
+      "json": "narcbench/technique_reproduction.json",
+      "key": "behaviour_baseline_core_by_model.auroc.3"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-LENGTH-RESIDUALIZATION",
+   "where": "Sec. 4 (residualizing length weakens the stego probe 0.996 -> 0.62)",
+   "checks": [
+    {
+     "paper": "0.996",
+     "what": "",
+     "source": {
+      "csv": "narcbench/evasion.csv",
+      "where": {
+       "cell": "gpt_oss_20b_stego_emergent",
+       "detector": "raw_activation"
+      },
+      "col": "auroc"
+     }
+    },
+    {
+     "paper": "0.62",
+     "what": "",
+     "source": {
+      "csv": "narcbench/evasion.csv",
+      "where": {
+       "cell": "gpt_oss_20b_stego_emergent",
+       "detector": "activation_length_residualized"
+      },
+      "col": "auroc"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-T5-TOKEN-EQUALIZATION",
+   "where": "Table 5 and Sec. 4 (token-equalization attack)",
+   "checks": [
+    {
+     "paper": "0.977",
+     "what": "",
+     "source": {
+      "json": "narcbench/evasion_real.json",
+      "key": "tiers.stego.before.auroc"
+     }
+    },
+    {
+     "paper": "0.953",
+     "what": "",
+     "source": {
+      "json": "narcbench/evasion_real.json",
+      "key": "tiers.stego.after.auroc"
+     }
+    },
+    {
+     "paper": "0.985",
+     "what": "",
+     "source": {
+      "json": "narcbench/evasion_real.json",
+      "key": "tiers.stego.agg_length_auroc_before"
+     }
+    },
+    {
+     "paper": "0.533",
+     "what": "",
+     "source": {
+      "json": "narcbench/evasion_real.json",
+      "key": "tiers.stego.agg_length_auroc_after"
+     }
+    },
+    {
+     "paper": "0.53",
+     "what": "",
+     "source": {
+      "json": "narcbench/evasion_real.json",
+      "key": "tiers.stego.agg_length_auroc_after"
+     }
+    },
+    {
+     "paper": "0.939",
+     "what": "",
+     "source": {
+      "json": "narcbench/evasion_real.json",
+      "key": "tiers.core.before.auroc"
+     }
+    },
+    {
+     "paper": "0.916",
+     "what": "",
+     "source": {
+      "json": "narcbench/evasion_real.json",
+      "key": "tiers.core.after.auroc"
+     }
+    },
+    {
+     "paper": "0.623",
+     "what": "",
+     "source": {
+      "json": "narcbench/evasion_real.json",
+      "key": "tiers.core.agg_length_auroc_before"
+     }
+    },
+    {
+     "paper": "0.506",
+     "what": "",
+     "source": {
+      "json": "narcbench/evasion_real.json",
+      "key": "tiers.core.agg_length_auroc_after"
+     }
+    },
+    {
+     "paper": "120",
+     "what": "",
+     "source": {
+      "json": "narcbench/evasion_real.json",
+      "key": "tiers.stego.before.n"
+     },
+     "cmp": "exact"
+    }
+   ]
+  },
+  {
+   "id": "C-BREADTH-DELTAS",
+   "where": "Sec. 5 text (visible-trigger backdoors, lying tasks, insider trading)",
+   "checks": [
+    {
+     "paper": "+0.060",
+     "what": "",
+     "source": {
+      "json": "breadth/sleeper_result.json",
+      "key": "layers.16.delta"
+     }
+    },
+    {
+     "paper": "+0.013",
+     "what": "",
+     "source": {
+      "json": "breadth/backdoorllm_result.json",
+      "key": "layers.16.delta"
+     }
+    },
+    {
+     "paper": "+0.018",
+     "what": "",
+     "source": {
+      "derive": "liars_field",
+      "args": [
+       "convincing-game",
+       "delta"
+      ]
+     }
+    },
+    {
+     "paper": "-0.094",
+     "what": "",
+     "source": {
+      "derive": "liars_field",
+      "args": [
+       "gender-secret",
+       "delta"
+      ]
+     }
+    },
+    {
+     "paper": "+0.001",
+     "what": "",
+     "source": {
+      "json": "breadth/b2w_result.json",
+      "key": "insider_trading_full.delta"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-T6-B2W-AI-LIAR",
+   "where": "Table 6 (b2w ai_liar)",
+   "checks": [
+    {
+     "paper": "0.967",
+     "what": "act",
+     "source": {
+      "json": "breadth/b2w_result.json",
+      "key": "ai_liar.act"
+     }
+    },
+    {
+     "paper": "0.959",
+     "what": "text",
+     "source": {
+      "json": "breadth/b2w_result.json",
+      "key": "ai_liar.text"
+     }
+    },
+    {
+     "paper": "+0.009",
+     "what": "delta",
+     "source": {
+      "json": "breadth/b2w_result.json",
+      "key": "ai_liar.delta"
+     }
+    },
+    {
+     "paper": "0.131",
+     "what": "floor95",
+     "source": {
+      "json": "breadth/b2w_result.json",
+      "key": "ai_liar.floor95"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-T6-B2W-DILUTION",
+   "where": "Table 6 (b2w ai_liar_deception_dilution_100)",
+   "checks": [
+    {
+     "paper": "0.952",
+     "what": "act",
+     "source": {
+      "json": "breadth/b2w_result.json",
+      "key": "ai_liar_deception_dilution_100.act"
+     }
+    },
+    {
+     "paper": "0.919",
+     "what": "text",
+     "source": {
+      "json": "breadth/b2w_result.json",
+      "key": "ai_liar_deception_dilution_100.text"
+     }
+    },
+    {
+     "paper": "+0.033",
+     "what": "delta",
+     "source": {
+      "json": "breadth/b2w_result.json",
+      "key": "ai_liar_deception_dilution_100.delta"
+     }
+    },
+    {
+     "paper": "0.132",
+     "what": "floor95",
+     "source": {
+      "json": "breadth/b2w_result.json",
+      "key": "ai_liar_deception_dilution_100.floor95"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-T6-B2W-INSIDER",
+   "where": "Table 6 (b2w insider_trading_full)",
+   "checks": [
+    {
+     "paper": "1.000",
+     "what": "act",
+     "source": {
+      "json": "breadth/b2w_result.json",
+      "key": "insider_trading_full.act"
+     }
+    },
+    {
+     "paper": "0.999",
+     "what": "text",
+     "source": {
+      "json": "breadth/b2w_result.json",
+      "key": "insider_trading_full.text"
+     }
+    },
+    {
+     "paper": "+0.001",
+     "what": "delta",
+     "source": {
+      "json": "breadth/b2w_result.json",
+      "key": "insider_trading_full.delta"
+     }
+    },
+    {
+     "paper": "0.075",
+     "what": "floor95",
+     "source": {
+      "json": "breadth/b2w_result.json",
+      "key": "insider_trading_full.floor95"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-T6-B2W-SANDBAGGING",
+   "where": "Table 6 (b2w sandbagging_wmdp_mmlu)",
+   "checks": [
+    {
+     "paper": "0.984",
+     "what": "act",
+     "source": {
+      "json": "breadth/b2w_result.json",
+      "key": "sandbagging_wmdp_mmlu.act"
+     }
+    },
+    {
+     "paper": "0.999",
+     "what": "text",
+     "source": {
+      "json": "breadth/b2w_result.json",
+      "key": "sandbagging_wmdp_mmlu.text"
+     }
+    },
+    {
+     "paper": "-0.001",
+     "what": "delta",
+     "source": {
+      "json": "breadth/b2w_result.json",
+      "key": "sandbagging_wmdp_mmlu.delta"
+     }
+    },
+    {
+     "paper": "0.059",
+     "what": "floor95",
+     "source": {
+      "json": "breadth/b2w_result.json",
+      "key": "sandbagging_wmdp_mmlu.floor95"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-T6-B2W-APPS",
+   "where": "Table 6 (b2w apps_backdoors)",
+   "checks": [
+    {
+     "paper": "0.901",
+     "what": "act",
+     "source": {
+      "json": "breadth/b2w_result.json",
+      "key": "apps_backdoors.act"
+     }
+    },
+    {
+     "paper": "0.675",
+     "what": "text",
+     "source": {
+      "json": "breadth/b2w_result.json",
+      "key": "apps_backdoors.text"
+     }
+    },
+    {
+     "paper": "+0.226",
+     "what": "delta",
+     "source": {
+      "json": "breadth/b2w_result.json",
+      "key": "apps_backdoors.delta"
+     }
+    },
+    {
+     "paper": "0.218",
+     "what": "floor95",
+     "source": {
+      "json": "breadth/b2w_result.json",
+      "key": "apps_backdoors.floor95"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-T6-LIARS-CONVINCING",
+   "where": "Table 6 (Liars' Bench convincing-game)",
+   "checks": [
+    {
+     "paper": "0.737",
+     "what": "act",
+     "source": {
+      "derive": "liars_field",
+      "args": [
+       "convincing-game",
+       "act"
+      ]
+     }
+    },
+    {
+     "paper": "0.719",
+     "what": "text",
+     "source": {
+      "derive": "liars_field",
+      "args": [
+       "convincing-game",
+       "text"
+      ]
+     }
+    },
+    {
+     "paper": "+0.018",
+     "what": "delta",
+     "source": {
+      "derive": "liars_field",
+      "args": [
+       "convincing-game",
+       "delta"
+      ]
+     }
+    },
+    {
+     "paper": "0.119",
+     "what": "floor95",
+     "source": {
+      "derive": "liars_field",
+      "args": [
+       "convincing-game",
+       "floor95"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-T6-LIARS-GENDER",
+   "where": "Table 6 (Liars' Bench gender-secret)",
+   "checks": [
+    {
+     "paper": "0.902",
+     "what": "act",
+     "source": {
+      "derive": "liars_field",
+      "args": [
+       "gender-secret",
+       "act"
+      ]
+     }
+    },
+    {
+     "paper": "0.997",
+     "what": "text",
+     "source": {
+      "derive": "liars_field",
+      "args": [
+       "gender-secret",
+       "text"
+      ]
+     }
+    },
+    {
+     "paper": "-0.094",
+     "what": "delta",
+     "source": {
+      "derive": "liars_field",
+      "args": [
+       "gender-secret",
+       "delta"
+      ]
+     }
+    },
+    {
+     "paper": "0.131",
+     "what": "floor95",
+     "source": {
+      "derive": "liars_field",
+      "args": [
+       "gender-secret",
+       "floor95"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-T6-SLEEPER",
+   "where": "Table 6 (sleeper, layer 16)",
+   "checks": [
+    {
+     "paper": "1.000",
+     "what": "act",
+     "source": {
+      "json": "breadth/sleeper_result.json",
+      "key": "layers.16.act"
+     }
+    },
+    {
+     "paper": "0.940",
+     "what": "text",
+     "source": {
+      "json": "breadth/sleeper_result.json",
+      "key": "layers.16.text"
+     }
+    },
+    {
+     "paper": "+0.060",
+     "what": "delta",
+     "source": {
+      "json": "breadth/sleeper_result.json",
+      "key": "layers.16.delta"
+     }
+    },
+    {
+     "paper": "0.206",
+     "what": "floor95",
+     "source": {
+      "json": "breadth/sleeper_result.json",
+      "key": "layers.16.floor95"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-T6-BACKDOORLLM",
+   "where": "Table 6 (backdoorllm, layer 16)",
+   "checks": [
+    {
+     "paper": "1.000",
+     "what": "act",
+     "source": {
+      "json": "breadth/backdoorllm_result.json",
+      "key": "layers.16.act"
+     }
+    },
+    {
+     "paper": "0.987",
+     "what": "text",
+     "source": {
+      "json": "breadth/backdoorllm_result.json",
+      "key": "layers.16.text"
+     }
+    },
+    {
+     "paper": "+0.013",
+     "what": "delta",
+     "source": {
+      "json": "breadth/backdoorllm_result.json",
+      "key": "layers.16.delta"
+     }
+    },
+    {
+     "paper": "0.060",
+     "what": "floor95",
+     "source": {
+      "json": "breadth/backdoorllm_result.json",
+      "key": "layers.16.floor95"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-APPS-MULTIPLICITY",
+   "where": "Table 6 caption and Sec. 5 (code backdoor p=0.025, n=150; m=12, BH q=0.30, Bonferroni 0.004)",
+   "checks": [
+    {
+     "paper": "0.025",
+     "what": "",
+     "source": {
+      "json": "breadth/b2w_result.json",
+      "key": "apps_backdoors.p"
+     }
+    },
+    {
+     "paper": "150",
+     "what": "",
+     "source": {
+      "json": "breadth/b2w_result.json",
+      "key": "apps_backdoors.n"
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "12",
+     "what": "",
+     "source": {
+      "derive": "n_breadth_tests",
+      "args": []
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "0.30",
+     "what": "",
+     "source": {
+      "derive": "bh_q",
+      "args": [
+       "b2w_apps_backdoors"
+      ]
+     }
+    },
+    {
+     "paper": "0.30",
+     "what": "no breadth cell survives BH",
+     "source": {
+      "derive": "min_bh_q",
+      "args": []
+     }
+    },
+    {
+     "paper": "0.004",
+     "what": "",
+     "source": {
+      "derive": "bonferroni_alpha",
+      "args": []
+     }
+    },
+    {
+     "paper": "1",
+     "what": "the code backdoor carries the smallest p",
+     "source": {
+      "derive": "smallest_p_setting_is_apps",
+      "args": []
+     },
+     "cmp": "exact"
+    }
+   ]
+  },
+  {
+   "id": "C-FIG-BOUNDARY",
+   "where": "Figs. 1-2 (ten executed settings inside their floor; both withheld settings above it)",
+   "checks": [
+    {
+     "paper": "10",
+     "what": "",
+     "source": {
+      "derive": "n_executed_auroc_cells",
+      "args": []
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "10",
+     "what": "",
+     "source": {
+      "derive": "n_executed_inside_floor",
+      "args": []
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "2",
+     "what": "",
+     "source": {
+      "derive": "n_withheld_auroc_above_floor",
+      "args": []
+     },
+     "cmp": "exact"
+    }
+   ]
+  },
+  {
+   "id": "C-T7-HEAD-TO-HEAD",
+   "where": "Table 7 and Sec. 5 (naive boost vs access-fair delta)",
+   "checks": [
+    {
+     "paper": "+0.68",
+     "what": "",
+     "source": {
+      "csv": "narcbench/head_to_head.csv",
+      "where": {
+       "cell": "narcbench_colluder_gptoss_L13"
+      },
+      "col": "naive_boost"
+     }
+    },
+    {
+     "paper": "0.00",
+     "what": "access-fair delta ~0",
+     "source": {
+      "csv": "narcbench/head_to_head.csv",
+      "where": {
+       "cell": "narcbench_colluder_gptoss_L13"
+      },
+      "col": "fair_delta"
+     }
+    },
+    {
+     "paper": "+0.19",
+     "what": "",
+     "source": {
+      "csv": "narcbench/head_to_head.csv",
+      "where": {
+       "cell": "tfidf_cap50_vs_fullvocab"
+      },
+      "col": "naive_boost"
+     }
+    },
+    {
+     "paper": "+0.10",
+     "what": "",
+     "source": {
+      "csv": "narcbench/head_to_head.csv",
+      "where": {
+       "cell": "tfidf_cap50_vs_fullvocab"
+      },
+      "col": "fair_delta"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-T8-DIMSWEEP",
+   "where": "Table 8 and Sec. 5 (activation dimensionality sweep)",
+   "checks": [
+    {
+     "paper": "+0.037",
+     "what": "gpt-oss PCA 10",
+     "source": {
+      "csv": "narcbench/dim_sweep_gptoss.csv",
+      "where": {
+       "pca_dim": "10"
+      },
+      "col": "delta"
+     }
+    },
+    {
+     "paper": "+0.102",
+     "what": "gpt-oss PCA 30",
+     "source": {
+      "csv": "narcbench/dim_sweep_gptoss.csv",
+      "where": {
+       "pca_dim": "30"
+      },
+      "col": "delta"
+     }
+    },
+    {
+     "paper": "+0.110",
+     "what": "gpt-oss PCA 100",
+     "source": {
+      "csv": "narcbench/dim_sweep_gptoss.csv",
+      "where": {
+       "pca_dim": "100"
+      },
+      "col": "delta"
+     }
+    },
+    {
+     "paper": "+0.110",
+     "what": "gpt-oss PCA 200",
+     "source": {
+      "csv": "narcbench/dim_sweep_gptoss.csv",
+      "where": {
+       "pca_dim": "200"
+      },
+      "col": "delta"
+     }
+    },
+    {
+     "paper": "-0.202",
+     "what": "Qwen3 PCA 10",
+     "source": {
+      "csv": "narcbench/dim_sweep_qwen3_accessfair.csv",
+      "where": {
+       "pca_dim": "10"
+      },
+      "col": "delta"
+     }
+    },
+    {
+     "paper": "-0.050",
+     "what": "Qwen3 PCA 30",
+     "source": {
+      "csv": "narcbench/dim_sweep_qwen3_accessfair.csv",
+      "where": {
+       "pca_dim": "30"
+      },
+      "col": "delta"
+     }
+    },
+    {
+     "paper": "-0.044",
+     "what": "Qwen3 PCA 100",
+     "source": {
+      "csv": "narcbench/dim_sweep_qwen3_accessfair.csv",
+      "where": {
+       "pca_dim": "100"
+      },
+      "col": "delta"
+     }
+    },
+    {
+     "paper": "-0.044",
+     "what": "Qwen3 PCA 200",
+     "source": {
+      "csv": "narcbench/dim_sweep_qwen3_accessfair.csv",
+      "where": {
+       "pca_dim": "200"
+      },
+      "col": "delta"
+     }
+    },
+    {
+     "paper": "0.110",
+     "what": "saturated delta stays below its floor",
+     "source": {
+      "csv": "narcbench/dim_sweep_gptoss.csv",
+      "where": {
+       "pca_dim": "200"
+      },
+      "col": "floor95"
+     },
+     "cmp": "gt"
+    }
+   ]
+  },
+  {
+   "id": "C-ORGANISMS",
+   "where": "Sec. 5 (decode 0.85 to 0.91 where capability is withheld; password-locked Gemma 0.33)",
+   "checks": [
+    {
+     "paper": "0.85-0.91",
+     "what": "",
+     "source": {
+      "derive": "org_decode_values",
+      "args": [
+       [
+        "mistral",
+        "sandbagging/org_mistral_instruct.json",
+        "sandbagging/org_gemma_cb.json"
+       ]
+      ]
+     },
+     "cmp": "range"
+    },
+    {
+     "paper": "0.33",
+     "what": "",
+     "source": {
+      "json": "sandbagging/org_gemma_pwd.json",
+      "key": "layers.28.decode_acc"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-QUANTIZATION",
+   "where": "Sec. 5 (late-layer decode under fp16, int8 and nf4; layer 16 weak)",
+   "checks": [
+    {
+     "paper": "0.98-0.99",
+     "what": "",
+     "source": {
+      "derive": "sandbag_values",
+      "args": [
+       "auroc",
+       [
+        "fp16",
+        "int8",
+        "nf4"
+       ],
+       [
+        24,
+        28,
+        30
+       ]
+      ]
+     },
+     "cmp": "range"
+    },
+    {
+     "paper": "0.90-0.91",
+     "what": "",
+     "source": {
+      "derive": "sandbag_values",
+      "args": [
+       "acc",
+       [
+        "fp16"
+       ],
+       [
+        24,
+        28,
+        30
+       ]
+      ]
+     },
+     "cmp": "range"
+    },
+    {
+     "paper": "0.89-0.90",
+     "what": "",
+     "source": {
+      "derive": "sandbag_values",
+      "args": [
+       "acc",
+       [
+        "int8"
+       ],
+       [
+        24,
+        28,
+        30
+       ]
+      ]
+     },
+     "cmp": "range"
+    },
+    {
+     "paper": "0.91-0.92",
+     "what": "",
+     "source": {
+      "derive": "sandbag_values",
+      "args": [
+       "acc",
+       [
+        "nf4"
+       ],
+       [
+        24,
+        28,
+        30
+       ]
+      ]
+     },
+     "cmp": "range"
+    },
+    {
+     "paper": "0.57-0.58",
+     "what": "",
+     "source": {
+      "derive": "sandbag_values",
+      "args": [
+       "auroc",
+       [
+        "fp16",
+        "int8",
+        "nf4"
+       ],
+       [
+        16
+       ]
+      ]
+     },
+     "cmp": "range"
+    }
+   ]
+  },
+  {
+   "id": "C-T9-ORGSUMMARY",
+   "where": "Table 9 (sandbagging organisms on 370 WMDP questions)",
+   "checks": [
+    {
+     "paper": "370",
+     "what": "",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.n"
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "0.119",
+     "what": "",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.no_pwd_acc"
+     }
+    },
+    {
+     "paper": "0.578",
+     "what": "",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.pwd_acc"
+     }
+    },
+    {
+     "paper": "0.912",
+     "what": "",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.24.acc"
+     }
+    },
+    {
+     "paper": "0.122",
+     "what": "Mistral-Instruct no_pwd_acc",
+     "source": {
+      "json": "sandbagging/org_mistral_instruct.json",
+      "key": "no_pwd_acc"
+     }
+    },
+    {
+     "paper": "0.516",
+     "what": "Mistral-Instruct pwd_acc",
+     "source": {
+      "json": "sandbagging/org_mistral_instruct.json",
+      "key": "pwd_acc"
+     }
+    },
+    {
+     "paper": "0.848",
+     "what": "Mistral-Instruct layers.30.decode_acc",
+     "source": {
+      "json": "sandbagging/org_mistral_instruct.json",
+      "key": "layers.30.decode_acc"
+     }
+    },
+    {
+     "paper": "0.151",
+     "what": "Gemma CB no_pwd_acc",
+     "source": {
+      "json": "sandbagging/org_gemma_cb.json",
+      "key": "no_pwd_acc"
+     }
+    },
+    {
+     "paper": "0.524",
+     "what": "Gemma CB pwd_acc",
+     "source": {
+      "json": "sandbagging/org_gemma_cb.json",
+      "key": "pwd_acc"
+     }
+    },
+    {
+     "paper": "0.910",
+     "what": "Gemma CB layers.36.decode_acc",
+     "source": {
+      "json": "sandbagging/org_gemma_cb.json",
+      "key": "layers.36.decode_acc"
+     }
+    },
+    {
+     "paper": "0.141",
+     "what": "Gemma pwd no_pwd_acc",
+     "source": {
+      "json": "sandbagging/org_gemma_pwd.json",
+      "key": "no_pwd_acc"
+     }
+    },
+    {
+     "paper": "0.527",
+     "what": "Gemma pwd pwd_acc",
+     "source": {
+      "json": "sandbagging/org_gemma_pwd.json",
+      "key": "pwd_acc"
+     }
+    },
+    {
+     "paper": "0.326",
+     "what": "Gemma pwd layers.28.decode_acc",
+     "source": {
+      "json": "sandbagging/org_gemma_pwd.json",
+      "key": "layers.28.decode_acc"
+     }
+    },
+    {
+     "paper": "30",
+     "what": "best layer of Mistral-Instruct",
+     "source": {
+      "derive": "org_best_layer",
+      "args": [
+       "sandbagging/org_mistral_instruct.json"
+      ]
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "36",
+     "what": "best layer of Gemma CB",
+     "source": {
+      "derive": "org_best_layer",
+      "args": [
+       "sandbagging/org_gemma_cb.json"
+      ]
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "28",
+     "what": "best layer of Gemma pwd",
+     "source": {
+      "derive": "org_best_layer",
+      "args": [
+       "sandbagging/org_gemma_pwd.json"
+      ]
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "370",
+     "what": "",
+     "source": {
+      "json": "sandbagging/org_gemma_cb.json",
+      "key": "n"
+     },
+     "cmp": "exact"
+    }
+   ]
+  },
+  {
+   "id": "C-T10-LAYERS",
+   "where": "Table 10 and Sec. 5 (layer profiles)",
+   "checks": [
+    {
+     "paper": "0.218",
+     "what": "Gemma CB L20",
+     "source": {
+      "json": "sandbagging/org_gemma_cb.json",
+      "key": "layers.20.decode_acc"
+     }
+    },
+    {
+     "paper": "0.282",
+     "what": "Gemma CB L28",
+     "source": {
+      "json": "sandbagging/org_gemma_cb.json",
+      "key": "layers.28.decode_acc"
+     }
+    },
+    {
+     "paper": "0.415",
+     "what": "Gemma CB L32",
+     "source": {
+      "json": "sandbagging/org_gemma_cb.json",
+      "key": "layers.32.decode_acc"
+     }
+    },
+    {
+     "paper": "0.910",
+     "what": "Gemma CB L36",
+     "source": {
+      "json": "sandbagging/org_gemma_cb.json",
+      "key": "layers.36.decode_acc"
+     }
+    },
+    {
+     "paper": "0.268",
+     "what": "Gemma pwd L20",
+     "source": {
+      "json": "sandbagging/org_gemma_pwd.json",
+      "key": "layers.20.decode_acc"
+     }
+    },
+    {
+     "paper": "0.326",
+     "what": "Gemma pwd L28",
+     "source": {
+      "json": "sandbagging/org_gemma_pwd.json",
+      "key": "layers.28.decode_acc"
+     }
+    },
+    {
+     "paper": "0.316",
+     "what": "Gemma pwd L32",
+     "source": {
+      "json": "sandbagging/org_gemma_pwd.json",
+      "key": "layers.32.decode_acc"
+     }
+    },
+    {
+     "paper": "0.268",
+     "what": "Gemma pwd L36",
+     "source": {
+      "json": "sandbagging/org_gemma_pwd.json",
+      "key": "layers.36.decode_acc"
+     }
+    },
+    {
+     "paper": "0.375",
+     "what": "Mistral-Instruct L16",
+     "source": {
+      "json": "sandbagging/org_mistral_instruct.json",
+      "key": "layers.16.decode_acc"
+     }
+    },
+    {
+     "paper": "0.793",
+     "what": "Mistral-Instruct L24",
+     "source": {
+      "json": "sandbagging/org_mistral_instruct.json",
+      "key": "layers.24.decode_acc"
+     }
+    },
+    {
+     "paper": "0.772",
+     "what": "Mistral-Instruct L28",
+     "source": {
+      "json": "sandbagging/org_mistral_instruct.json",
+      "key": "layers.28.decode_acc"
+     }
+    },
+    {
+     "paper": "0.848",
+     "what": "Mistral-Instruct L30",
+     "source": {
+      "json": "sandbagging/org_mistral_instruct.json",
+      "key": "layers.30.decode_acc"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-T11-OPERATING",
+   "where": "Table 11, Fig. 3 and Sec. 5 (operating points on large-n datasets)",
+   "checks": [
+    {
+     "paper": "0.999",
+     "what": "insider_trading_full full-access text auroc",
+     "source": {
+      "csv": "breadth/fpr_b2w_large.csv",
+      "where": {
+       "dataset": "insider_trading_full",
+       "detector": "full-access text"
+      },
+      "col": "auroc"
+     }
+    },
+    {
+     "paper": "1.000",
+     "what": "insider_trading_full full-access text tpr_at_1pct_fpr",
+     "source": {
+      "csv": "breadth/fpr_b2w_large.csv",
+      "where": {
+       "dataset": "insider_trading_full",
+       "detector": "full-access text"
+      },
+      "col": "tpr_at_1pct_fpr"
+     }
+    },
+    {
+     "paper": "1.000",
+     "what": "insider_trading_full full-access text tpr_at_5pct_fpr",
+     "source": {
+      "csv": "breadth/fpr_b2w_large.csv",
+      "where": {
+       "dataset": "insider_trading_full",
+       "detector": "full-access text"
+      },
+      "col": "tpr_at_5pct_fpr"
+     }
+    },
+    {
+     "paper": "1.000",
+     "what": "insider_trading_full activation probe auroc",
+     "source": {
+      "csv": "breadth/fpr_b2w_large.csv",
+      "where": {
+       "dataset": "insider_trading_full",
+       "detector": "activation probe"
+      },
+      "col": "auroc"
+     }
+    },
+    {
+     "paper": "0.994",
+     "what": "insider_trading_full activation probe tpr_at_1pct_fpr",
+     "source": {
+      "csv": "breadth/fpr_b2w_large.csv",
+      "where": {
+       "dataset": "insider_trading_full",
+       "detector": "activation probe"
+      },
+      "col": "tpr_at_1pct_fpr"
+     }
+    },
+    {
+     "paper": "1.000",
+     "what": "insider_trading_full activation probe tpr_at_5pct_fpr",
+     "source": {
+      "csv": "breadth/fpr_b2w_large.csv",
+      "where": {
+       "dataset": "insider_trading_full",
+       "detector": "activation probe"
+      },
+      "col": "tpr_at_5pct_fpr"
+     }
+    },
+    {
+     "paper": "0.999",
+     "what": "sandbagging_wmdp_mmlu full-access text auroc",
+     "source": {
+      "csv": "breadth/fpr_b2w_large.csv",
+      "where": {
+       "dataset": "sandbagging_wmdp_mmlu",
+       "detector": "full-access text"
+      },
+      "col": "auroc"
+     }
+    },
+    {
+     "paper": "0.986",
+     "what": "sandbagging_wmdp_mmlu full-access text tpr_at_1pct_fpr",
+     "source": {
+      "csv": "breadth/fpr_b2w_large.csv",
+      "where": {
+       "dataset": "sandbagging_wmdp_mmlu",
+       "detector": "full-access text"
+      },
+      "col": "tpr_at_1pct_fpr"
+     }
+    },
+    {
+     "paper": "0.998",
+     "what": "sandbagging_wmdp_mmlu full-access text tpr_at_5pct_fpr",
+     "source": {
+      "csv": "breadth/fpr_b2w_large.csv",
+      "where": {
+       "dataset": "sandbagging_wmdp_mmlu",
+       "detector": "full-access text"
+      },
+      "col": "tpr_at_5pct_fpr"
+     }
+    },
+    {
+     "paper": "0.984",
+     "what": "sandbagging_wmdp_mmlu activation probe auroc",
+     "source": {
+      "csv": "breadth/fpr_b2w_large.csv",
+      "where": {
+       "dataset": "sandbagging_wmdp_mmlu",
+       "detector": "activation probe"
+      },
+      "col": "auroc"
+     }
+    },
+    {
+     "paper": "0.838",
+     "what": "sandbagging_wmdp_mmlu activation probe tpr_at_1pct_fpr",
+     "source": {
+      "csv": "breadth/fpr_b2w_large.csv",
+      "where": {
+       "dataset": "sandbagging_wmdp_mmlu",
+       "detector": "activation probe"
+      },
+      "col": "tpr_at_1pct_fpr"
+     }
+    },
+    {
+     "paper": "0.948",
+     "what": "sandbagging_wmdp_mmlu activation probe tpr_at_5pct_fpr",
+     "source": {
+      "csv": "breadth/fpr_b2w_large.csv",
+      "where": {
+       "dataset": "sandbagging_wmdp_mmlu",
+       "detector": "activation probe"
+      },
+      "col": "tpr_at_5pct_fpr"
+     }
+    },
+    {
+     "paper": "0.628",
+     "what": "apps_backdoors full-access text auroc",
+     "source": {
+      "csv": "breadth/fpr_b2w_large.csv",
+      "where": {
+       "dataset": "apps_backdoors",
+       "detector": "full-access text"
+      },
+      "col": "auroc"
+     }
+    },
+    {
+     "paper": "0.000",
+     "what": "apps_backdoors full-access text tpr_at_1pct_fpr",
+     "source": {
+      "csv": "breadth/fpr_b2w_large.csv",
+      "where": {
+       "dataset": "apps_backdoors",
+       "detector": "full-access text"
+      },
+      "col": "tpr_at_1pct_fpr"
+     }
+    },
+    {
+     "paper": "0.018",
+     "what": "apps_backdoors full-access text tpr_at_5pct_fpr",
+     "source": {
+      "csv": "breadth/fpr_b2w_large.csv",
+      "where": {
+       "dataset": "apps_backdoors",
+       "detector": "full-access text"
+      },
+      "col": "tpr_at_5pct_fpr"
+     }
+    },
+    {
+     "paper": "0.901",
+     "what": "apps_backdoors activation probe auroc",
+     "source": {
+      "csv": "breadth/fpr_b2w_large.csv",
+      "where": {
+       "dataset": "apps_backdoors",
+       "detector": "activation probe"
+      },
+      "col": "auroc"
+     }
+    },
+    {
+     "paper": "0.368",
+     "what": "apps_backdoors activation probe tpr_at_1pct_fpr",
+     "source": {
+      "csv": "breadth/fpr_b2w_large.csv",
+      "where": {
+       "dataset": "apps_backdoors",
+       "detector": "activation probe"
+      },
+      "col": "tpr_at_1pct_fpr"
+     }
+    },
+    {
+     "paper": "0.474",
+     "what": "apps_backdoors activation probe tpr_at_5pct_fpr",
+     "source": {
+      "csv": "breadth/fpr_b2w_large.csv",
+      "where": {
+       "dataset": "apps_backdoors",
+       "detector": "activation probe"
+      },
+      "col": "tpr_at_5pct_fpr"
+     }
+    },
+    {
+     "paper": "1005",
+     "what": "",
+     "source": {
+      "csv": "breadth/fpr_b2w_large.csv",
+      "where": {
+       "dataset": "insider_trading_full",
+       "detector": "full-access text"
+      },
+      "col": "n"
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "931",
+     "what": "",
+     "source": {
+      "derive": "roc_n",
+      "args": [
+       "sandbagging_wmdp_mmlu"
+      ]
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "150",
+     "what": "",
+     "source": {
+      "derive": "roc_n",
+      "args": [
+       "apps_backdoors"
+      ]
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "36.8%",
+     "what": "",
+     "source": {
+      "csv": "breadth/fpr_b2w_large.csv",
+      "where": {
+       "dataset": "apps_backdoors",
+       "detector": "activation probe"
+      },
+      "col": "tpr_at_1pct_fpr"
+     }
+    },
+    {
+     "paper": "0%",
+     "what": "",
+     "source": {
+      "csv": "breadth/fpr_b2w_large.csv",
+      "where": {
+       "dataset": "apps_backdoors",
+       "detector": "full-access text"
+      },
+      "col": "tpr_at_1pct_fpr"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-ROC-RECOMPUTED",
+   "where": "Fig. 3 and Table 11 (recomputed from the stored out-of-fold scores)",
+   "checks": [
+    {
+     "paper": "0.999",
+     "what": "sandbagging_wmdp_mmlu text auroc",
+     "source": {
+      "derive": "roc",
+      "args": [
+       "sandbagging_wmdp_mmlu",
+       "text",
+       "auroc"
+      ]
+     }
+    },
+    {
+     "paper": "0.986",
+     "what": "sandbagging_wmdp_mmlu text tpr1",
+     "source": {
+      "derive": "roc",
+      "args": [
+       "sandbagging_wmdp_mmlu",
+       "text",
+       "tpr1"
+      ]
+     }
+    },
+    {
+     "paper": "0.998",
+     "what": "sandbagging_wmdp_mmlu text tpr5",
+     "source": {
+      "derive": "roc",
+      "args": [
+       "sandbagging_wmdp_mmlu",
+       "text",
+       "tpr5"
+      ]
+     }
+    },
+    {
+     "paper": "0.984",
+     "what": "sandbagging_wmdp_mmlu act auroc",
+     "source": {
+      "derive": "roc",
+      "args": [
+       "sandbagging_wmdp_mmlu",
+       "act",
+       "auroc"
+      ]
+     }
+    },
+    {
+     "paper": "0.838",
+     "what": "sandbagging_wmdp_mmlu act tpr1",
+     "source": {
+      "derive": "roc",
+      "args": [
+       "sandbagging_wmdp_mmlu",
+       "act",
+       "tpr1"
+      ]
+     }
+    },
+    {
+     "paper": "0.948",
+     "what": "sandbagging_wmdp_mmlu act tpr5",
+     "source": {
+      "derive": "roc",
+      "args": [
+       "sandbagging_wmdp_mmlu",
+       "act",
+       "tpr5"
+      ]
+     }
+    },
+    {
+     "paper": "0.628",
+     "what": "apps_backdoors text auroc",
+     "source": {
+      "derive": "roc",
+      "args": [
+       "apps_backdoors",
+       "text",
+       "auroc"
+      ]
+     }
+    },
+    {
+     "paper": "0.000",
+     "what": "apps_backdoors text tpr1",
+     "source": {
+      "derive": "roc",
+      "args": [
+       "apps_backdoors",
+       "text",
+       "tpr1"
+      ]
+     }
+    },
+    {
+     "paper": "0.018",
+     "what": "apps_backdoors text tpr5",
+     "source": {
+      "derive": "roc",
+      "args": [
+       "apps_backdoors",
+       "text",
+       "tpr5"
+      ]
+     }
+    },
+    {
+     "paper": "0.901",
+     "what": "apps_backdoors act auroc",
+     "source": {
+      "derive": "roc",
+      "args": [
+       "apps_backdoors",
+       "act",
+       "auroc"
+      ]
+     }
+    },
+    {
+     "paper": "0.368",
+     "what": "apps_backdoors act tpr1",
+     "source": {
+      "derive": "roc",
+      "args": [
+       "apps_backdoors",
+       "act",
+       "tpr1"
+      ]
+     }
+    },
+    {
+     "paper": "0.474",
+     "what": "apps_backdoors act tpr5",
+     "source": {
+      "derive": "roc",
+      "args": [
+       "apps_backdoors",
+       "act",
+       "tpr5"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-SANDBAG-TEXT",
+   "where": "Sec. 6 (n=205 sandbagged; decode and baselines)",
+   "checks": [
+    {
+     "paper": "205",
+     "what": "",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.n_sandbagged"
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "0.33",
+     "what": "most frequent option",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.majority_letter_acc"
+     }
+    },
+    {
+     "paper": "0.302",
+     "what": "question-text decoder accuracy",
+     "source": {
+      "json": "sandbagging/sandbag_access_fair.json",
+      "key": "text_acc"
+     }
+    },
+    {
+     "paper": "0.49",
+     "what": "question-text decoder AUROC",
+     "source": {
+      "json": "sandbagging/sandbag_access_fair.json",
+      "key": "text_auroc"
+     }
+    },
+    {
+     "paper": "+0.496",
+     "what": "",
+     "source": {
+      "json": "sandbagging/sandbag_access_fair.json",
+      "key": "layers.24.delta"
+     }
+    },
+    {
+     "paper": "0.077",
+     "what": "",
+     "source": {
+      "json": "sandbagging/sandbag_access_fair.json",
+      "key": "layers.24.floor95"
+     }
+    },
+    {
+     "paper": "0.005",
+     "what": "p < 0.005",
+     "source": {
+      "json": "sandbagging/sandbag_access_fair.json",
+      "key": "layers.24.p"
+     },
+     "cmp": "lt"
+    },
+    {
+     "paper": "1000",
+     "what": "bootstrap resamples",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "n_boot"
+     },
+     "cmp": "exact"
+    }
+   ]
+  },
+  {
+   "id": "C-T12-SANDBAG",
+   "where": "Table 12 and Fig. 4 (decode by layer, one fp16 extraction)",
+   "checks": [
+    {
+     "paper": "0.395",
+     "what": "L16 acc",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.16.acc"
+     }
+    },
+    {
+     "paper": "0.332",
+     "what": "L16 acc_ci.0",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.16.acc_ci.0"
+     }
+    },
+    {
+     "paper": "0.459",
+     "what": "L16 acc_ci.1",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.16.acc_ci.1"
+     }
+    },
+    {
+     "paper": "0.575",
+     "what": "L16 auroc",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.16.auroc"
+     }
+    },
+    {
+     "paper": "0.527",
+     "what": "L16 auroc_ci.0",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.16.auroc_ci.0"
+     }
+    },
+    {
+     "paper": "0.624",
+     "what": "L16 auroc_ci.1",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.16.auroc_ci.1"
+     }
+    },
+    {
+     "paper": "0.010",
+     "what": "L16 tpr1.point",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.16.tpr1.point"
+     }
+    },
+    {
+     "paper": "0.912",
+     "what": "L24 acc",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.24.acc"
+     }
+    },
+    {
+     "paper": "0.868",
+     "what": "L24 acc_ci.0",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.24.acc_ci.0"
+     }
+    },
+    {
+     "paper": "0.946",
+     "what": "L24 acc_ci.1",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.24.acc_ci.1"
+     }
+    },
+    {
+     "paper": "0.987",
+     "what": "L24 auroc",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.24.auroc"
+     }
+    },
+    {
+     "paper": "0.977",
+     "what": "L24 auroc_ci.0",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.24.auroc_ci.0"
+     }
+    },
+    {
+     "paper": "0.995",
+     "what": "L24 auroc_ci.1",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.24.auroc_ci.1"
+     }
+    },
+    {
+     "paper": "0.820",
+     "what": "L24 tpr1.point",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.24.tpr1.point"
+     }
+    },
+    {
+     "paper": "0.898",
+     "what": "L28 acc",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.28.acc"
+     }
+    },
+    {
+     "paper": "0.854",
+     "what": "L28 acc_ci.0",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.28.acc_ci.0"
+     }
+    },
+    {
+     "paper": "0.937",
+     "what": "L28 acc_ci.1",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.28.acc_ci.1"
+     }
+    },
+    {
+     "paper": "0.985",
+     "what": "L28 auroc",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.28.auroc"
+     }
+    },
+    {
+     "paper": "0.972",
+     "what": "L28 auroc_ci.0",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.28.auroc_ci.0"
+     }
+    },
+    {
+     "paper": "0.994",
+     "what": "L28 auroc_ci.1",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.28.auroc_ci.1"
+     }
+    },
+    {
+     "paper": "0.829",
+     "what": "L28 tpr1.point",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.28.tpr1.point"
+     }
+    },
+    {
+     "paper": "0.898",
+     "what": "L30 acc",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.30.acc"
+     }
+    },
+    {
+     "paper": "0.854",
+     "what": "L30 acc_ci.0",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.30.acc_ci.0"
+     }
+    },
+    {
+     "paper": "0.937",
+     "what": "L30 acc_ci.1",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.30.acc_ci.1"
+     }
+    },
+    {
+     "paper": "0.982",
+     "what": "L30 auroc",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.30.auroc"
+     }
+    },
+    {
+     "paper": "0.969",
+     "what": "L30 auroc_ci.0",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.30.auroc_ci.0"
+     }
+    },
+    {
+     "paper": "0.992",
+     "what": "L30 auroc_ci.1",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.30.auroc_ci.1"
+     }
+    },
+    {
+     "paper": "0.707",
+     "what": "L30 tpr1.point",
+     "source": {
+      "json": "sandbagging/sandbag_one_run.json",
+      "key": "per_quant.fp16.layers.30.tpr1.point"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-STEERING",
+   "where": "Sec. 6 (separate steering run: 160 items, alpha=4, +0.069 vs opposite +0.244)",
+   "checks": [
+    {
+     "paper": "160",
+     "what": "",
+     "source": {
+      "regex": "sandbagging/steer.log",
+      "pattern": "sandbagged (\\d+)"
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "0.000",
+     "what": "accuracy at alpha 0",
+     "source": {
+      "regex": "sandbagging/steer.log",
+      "pattern": "baseline no-pwd acc on sandbagged = ([0-9.]+)"
+     }
+    },
+    {
+     "paper": "+0.069",
+     "what": "",
+     "source": {
+      "regex": "sandbagging/steer.log",
+      "pattern": "cap-dir a=4\\.0 acc=([0-9.]+)"
+     }
+    },
+    {
+     "paper": "+0.244",
+     "what": "",
+     "source": {
+      "regex": "sandbagging/steer.log",
+      "pattern": "a=4\\.0 .*opposite\\(-a\\) acc=([0-9.]+)"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-CMI",
+   "where": "Sec. 7 (code-backdoor CMI: plug-in 0.70 bits, kNN 0.34 bits, nulls 0.33 and 0.07, p < 0.04)",
+   "checks": [
+    {
+     "paper": "0.70",
+     "what": "",
+     "source": {
+      "json": "calibration/controlled_delta_vs_direct_cmi.json",
+      "key": "cells.apps_backdoors.cmi_disc.point"
+     }
+    },
+    {
+     "paper": "0.34",
+     "what": "",
+     "source": {
+      "json": "calibration/controlled_delta_vs_direct_cmi.json",
+      "key": "cells.apps_backdoors.cmi_knn.point"
+     }
+    },
+    {
+     "paper": "0.33",
+     "what": "",
+     "source": {
+      "json": "calibration/controlled_delta_vs_direct_cmi.json",
+      "key": "cells.apps_backdoors.cmi_disc.floor95"
+     }
+    },
+    {
+     "paper": "0.07",
+     "what": "",
+     "source": {
+      "json": "calibration/controlled_delta_vs_direct_cmi.json",
+      "key": "cells.apps_backdoors.cmi_knn.floor95"
+     }
+    },
+    {
+     "paper": "0.04",
+     "what": "",
+     "source": {
+      "json": "calibration/controlled_delta_vs_direct_cmi.json",
+      "key": "cells.apps_backdoors.cmi_disc.p"
+     },
+     "cmp": "lt"
+    },
+    {
+     "paper": "0.04",
+     "what": "",
+     "source": {
+      "json": "calibration/controlled_delta_vs_direct_cmi.json",
+      "key": "cells.apps_backdoors.cmi_knn.p"
+     },
+     "cmp": "lt"
+    }
+   ]
+  },
+  {
+   "id": "C-WORSTCASE",
+   "where": "Sec. 7 (top principal directions removed from the layer-24 decode)",
+   "checks": [
+    {
+     "paper": "0.902",
+     "what": "",
+     "source": {
+      "csv": "sandbagging/worstcase_subspace.csv",
+      "where": {
+       "subspace_removed_topk": "0"
+      },
+      "col": "decode_acc"
+     }
+    },
+    {
+     "paper": "0.351",
+     "what": "",
+     "source": {
+      "csv": "sandbagging/worstcase_subspace.csv",
+      "where": {
+       "subspace_removed_topk": "3"
+      },
+      "col": "decode_acc"
+     }
+    },
+    {
+     "paper": "0.254",
+     "what": "",
+     "source": {
+      "csv": "sandbagging/worstcase_subspace.csv",
+      "where": {
+       "subspace_removed_topk": "6"
+      },
+      "col": "decode_acc"
+     }
+    },
+    {
+     "paper": "0.25",
+     "what": "below chance after ten or more",
+     "source": {
+      "derive": "worstcase_max_from",
+      "args": [
+       10
+      ]
+     },
+     "cmp": "lt"
+    }
+   ]
+  },
+  {
+   "id": "C-MEC",
+   "where": "Sec. 7 (minimum-entropy-coupling anchor, n=1200)",
+   "checks": [
+    {
+     "paper": "1200",
+     "what": "",
+     "source": {
+      "derive": "mec_total_n",
+      "args": []
+     },
+     "cmp": "exact"
+    },
+    {
+     "paper": "0.898",
+     "what": "",
+     "source": {
+      "json": "stego/mec_highpower.json",
+      "key": "receiver_decode_acc_bit0"
+     }
+    },
+    {
+     "paper": "0.500",
+     "what": "",
+     "source": {
+      "json": "stego/mec_highpower.json",
+      "key": "output_channel.payload_vs_output_auroc.point"
+     }
+    },
+    {
+     "paper": "0.454",
+     "what": "",
+     "source": {
+      "json": "stego/mec_highpower.json",
+      "key": "output_channel.payload_vs_output_auroc.lo"
+     }
+    },
+    {
+     "paper": "0.547",
+     "what": "",
+     "source": {
+      "json": "stego/mec_highpower.json",
+      "key": "output_channel.payload_vs_output_auroc.hi"
+     }
+    },
+    {
+     "paper": "0.477",
+     "what": "",
+     "source": {
+      "json": "stego/mec_highpower.json",
+      "key": "output_channel.stego_vs_control_auroc.point"
+     }
+    },
+    {
+     "paper": "0.446",
+     "what": "",
+     "source": {
+      "json": "stego/mec_highpower.json",
+      "key": "output_channel.stego_vs_control_auroc.lo"
+     }
+    },
+    {
+     "paper": "0.510",
+     "what": "",
+     "source": {
+      "json": "stego/mec_highpower.json",
+      "key": "output_channel.stego_vs_control_auroc.hi"
+     }
+    },
+    {
+     "paper": "0.587",
+     "what": "",
+     "source": {
+      "json": "stego/mec_highpower.json",
+      "key": "activation_decode.honest_split_selected.auroc.point"
+     }
+    },
+    {
+     "paper": "0.544",
+     "what": "",
+     "source": {
+      "json": "stego/mec_highpower.json",
+      "key": "activation_decode.honest_split_selected.auroc.lo"
+     }
+    },
+    {
+     "paper": "0.631",
+     "what": "",
+     "source": {
+      "json": "stego/mec_highpower.json",
+      "key": "activation_decode.honest_split_selected.auroc.hi"
+     }
+    },
+    {
+     "paper": "0.016",
+     "what": "",
+     "source": {
+      "json": "stego/mec_highpower.json",
+      "key": "activation_decode.honest_split_selected.tpr_at_1pct_fpr.point"
+     }
+    }
+   ]
+  },
+  {
+   "id": "C-PRESENCE",
+   "where": "Sec. 7 (key-agnostic presence detection at chance)",
+   "checks": [
+    {
+     "paper": "0.489",
+     "what": "",
+     "source": {
+      "json": "stego/mec_steganalysis_presence_fpr.json",
+      "key": "black_box.presence_auroc.point"
+     }
+    },
+    {
+     "paper": "0.457",
+     "what": "",
+     "source": {
+      "json": "stego/mec_steganalysis_presence_fpr.json",
+      "key": "black_box.presence_auroc.lo"
+     }
+    },
+    {
+     "paper": "0.519",
+     "what": "",
+     "source": {
+      "json": "stego/mec_steganalysis_presence_fpr.json",
+      "key": "black_box.presence_auroc.hi"
+     }
+    },
+    {
+     "paper": "0.514",
+     "what": "",
+     "source": {
+      "json": "stego/mec_steganalysis_presence_fpr.json",
+      "key": "white_box.raw.auroc.point"
+     }
+    },
+    {
+     "paper": "0.495",
+     "what": "",
+     "source": {
+      "json": "stego/mec_steganalysis_presence_fpr.json",
+      "key": "white_box.residualized.auroc.point"
+     }
+    }
+   ]
+  }
+ ]
+}

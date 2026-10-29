@@ -1,0 +1,4 @@
+model,tier,contrast,n,pos,n_empty_text,tfidf_fullvocab_auroc,paper_baseline_reproduced,paper_full_access_baseline,gap_fullvocab_vs_full_access,access_fair,status
+gpt_oss_20b,core,emergent,108,36,0,0.8611,0.8611,0.861,-0.0001,True,clean
+qwen3_32b,core,emergent,174,50,96,0.6735,0.6735,0.98,0.3065,False,needs_full_access_baseline
+qwen3_32b,transfer,emergent,216,72,216,0.5,0.5,0.921,0.421,False,needs_full_access_baseline

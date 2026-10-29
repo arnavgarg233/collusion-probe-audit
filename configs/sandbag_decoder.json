@@ -1,0 +1,34 @@
+{
+  "_doc": "Withheld-answer decoder for the sandbagging organisms (Section 6). Recomputed by scripts/recompute_sandbagging.py.",
+  "model": "mistralai/Mistral-7B-v0.1 + FelixHofstaetter/mistral-7b-sandbagging-new",
+  "questions": 370,
+  "precisions": [
+    "fp16",
+    "int8",
+    "nf4"
+  ],
+  "layers": [
+    16,
+    24,
+    28,
+    30
+  ],
+  "sandbagged_subset": "wrong without the password and right with it",
+  "decoder": {
+    "scaler": "StandardScaler",
+    "pca": 40,
+    "classifier": "LogisticRegression(C=0.5)",
+    "splitter": "GroupKFold(5) by subject",
+    "fit": "inside each training fold"
+  },
+  "n_boot": 1000,
+  "n_perm_access_fair": 200,
+  "worstcase_layer": 24,
+  "worstcase_k": [
+    0,
+    3,
+    6,
+    10,
+    20
+  ]
+}

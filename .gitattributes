@@ -1,0 +1,4 @@
+# Stored records are checked byte for byte against results/CHECKSUMS.txt.
+results/** -text
+configs/** -text
+data/manifest.json -text

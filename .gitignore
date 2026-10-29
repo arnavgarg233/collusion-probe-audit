@@ -1,0 +1,23 @@
+# Python environments and caches
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Editors and operating-system metadata
+.DS_Store
+.idea/
+.vscode/
+
+# Fetched external inputs (see data/manifest.json)
+data/external/
+
+# Local experiment products
+build/
+dist/
+outputs/
+runs/
+*.tmp
+results/tables/judge_cache_*.json

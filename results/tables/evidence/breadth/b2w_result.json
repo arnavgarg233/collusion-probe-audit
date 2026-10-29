@@ -1,0 +1,62 @@
+{
+  "ai_liar": {
+    "n": 266,
+    "pos": 93,
+    "act": 0.967,
+    "text": 0.959,
+    "full": 0.968,
+    "boost": 0.009,
+    "delta": 0.009,
+    "floor95": 0.131,
+    "p": 0.487,
+    "verdict": "CONFOUNDED"
+  },
+  "ai_liar_deception_dilution_100": {
+    "n": 266,
+    "pos": 93,
+    "act": 0.952,
+    "text": 0.919,
+    "full": 0.952,
+    "boost": 0.033,
+    "delta": 0.033,
+    "floor95": 0.132,
+    "p": 0.425,
+    "verdict": "CONFOUNDED"
+  },
+  "insider_trading_full": {
+    "n": 1005,
+    "pos": 336,
+    "act": 1.0,
+    "text": 0.999,
+    "full": 1.0,
+    "boost": 0.001,
+    "delta": 0.001,
+    "floor95": 0.075,
+    "p": 0.463,
+    "verdict": "CONFOUNDED"
+  },
+  "sandbagging_wmdp_mmlu": {
+    "n": 931,
+    "pos": 420,
+    "act": 0.984,
+    "text": 0.999,
+    "full": 0.998,
+    "boost": -0.016,
+    "delta": -0.001,
+    "floor95": 0.059,
+    "p": 0.512,
+    "verdict": "CONFOUNDED"
+  },
+  "apps_backdoors": {
+    "n": 150,
+    "pos": 57,
+    "act": 0.901,
+    "text": 0.675,
+    "full": 0.902,
+    "boost": 0.226,
+    "delta": 0.226,
+    "floor95": 0.218,
+    "p": 0.025,
+    "verdict": "WHITE_BOX_WINS"
+  }
+}

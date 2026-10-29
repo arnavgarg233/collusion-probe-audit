@@ -1,0 +1,39 @@
+{
+  "_note": "Summary values from the reproduction of NARCBench's five scenario-level probing techniques with the visible-behaviour baseline on gpt_oss_20b, and from the visible-behaviour baseline on the core tier of the four models. They were computed with scripts/experiments/narcbench/narcbench_techniques.py and narcbench_breadth.py; the per-run records were not kept, so the values are transcribed from the original analysis record.",
+  "technique_reproduction_gpt_oss_20b": {
+    "tiers": [
+      "Core",
+      "Stego",
+      "Transfer"
+    ],
+    "best_technique_auroc": [
+      1.0,
+      1.0,
+      0.98
+    ],
+    "visible_behaviour_auroc": [
+      1.0,
+      1.0,
+      0.6
+    ],
+    "trained_text_auroc": [
+      0.895,
+      1.0,
+      0.905
+    ]
+  },
+  "behaviour_baseline_core_by_model": {
+    "models": [
+      "gpt-oss-20B",
+      "qwen3-32B",
+      "deepseek-32B",
+      "llama-70B"
+    ],
+    "auroc": [
+      0.97,
+      0.84,
+      0.98,
+      1.0
+    ]
+  }
+}

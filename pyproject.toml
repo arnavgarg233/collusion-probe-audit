@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools==80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "collusion-probe-audit"
+version = "1.0.0"
+description = "Access-fair controlled-delta audit of white-box deception detectors, with the claim replay for the paper"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = "MIT"
+authors = [{ name = "Arnav Garg", email = "arnavgarg888@gmail.com" }]
+dependencies = [
+  "matplotlib==3.9.2",
+  "numpy==2.2.6",
+  "scikit-learn==1.7.2",
+  "scipy==1.15.3",
+  "seaborn==0.13.2",
+]
+
+[project.urls]
+Repository = "https://github.com/arnavgarg233/collusion-probe-audit"
+
+[project.scripts]
+collusion-verify = "collusion_probe_audit.cli:verify_main"
+collusion-figures = "collusion_probe_audit.cli:figures_main"
+collusion-sandbag = "collusion_probe_audit.cli:sandbag_main"
+
+[dependency-groups]
+dev = [
+  "pytest==8.4.2",
+  "ruff==0.13.3",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["collusion_probe_audit*"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-config --strict-markers"
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 110
+include = ["src/**/*.py", "scripts/*.py", "tests/**/*.py"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
+
+[tool.ruff.lint.per-file-ignores]
+# BLAS threads are pinned through the environment before numpy and scikit-learn are imported.
+"src/collusion_probe_audit/audit.py" = ["E402"]

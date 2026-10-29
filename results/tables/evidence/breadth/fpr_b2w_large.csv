@@ -1,0 +1,10 @@
+dataset,detector,auroc,tpr_at_1pct_fpr,tpr_at_5pct_fpr,n,pos
+insider_trading_full,full-access text,0.999,1.000,1.000,1005,336
+insider_trading_full,activation probe,1.000,0.994,1.000,1005,336
+insider_trading_full,combined,1.000,0.994,1.000,1005,336
+sandbagging_wmdp_mmlu,full-access text,0.999,0.986,0.998,931,420
+sandbagging_wmdp_mmlu,activation probe,0.984,0.838,0.948,931,420
+sandbagging_wmdp_mmlu,combined,1.000,0.998,1.000,931,420
+apps_backdoors,full-access text,0.628,0.000,0.018,150,57
+apps_backdoors,activation probe,0.901,0.368,0.474,150,57
+apps_backdoors,combined,0.902,0.333,0.404,150,57

@@ -1,0 +1,140 @@
+{
+  "_doc": "The fifteen settings of the breadth count (Section 5). Each entry names its row in breadth/breadth_regime.csv and, for settings scored in AUROC units, the record that holds its controlled delta and floor.",
+  "settings": [
+    {
+      "id": "narcbench_gptoss_core",
+      "regime_row": "narcbench_collusion_core_emergent|gpt_oss_20b",
+      "units": "auroc",
+      "delta": [
+        "narcbench/gapfill_corrected.csv",
+        "gpt_oss_20b|emergent_textctrl_corrected"
+      ]
+    },
+    {
+      "id": "narcbench_qwen3_core",
+      "regime_row": "narcbench_collusion_core_emergent|qwen3_32b",
+      "units": "auroc",
+      "delta": [
+        "narcbench/natural_subsat.csv",
+        "qwen3_32b|core|emergent"
+      ]
+    },
+    {
+      "id": "liars_convincing_game",
+      "regime_row": "liars_convincing_game|qwen2.5-32b-probe",
+      "units": "auroc",
+      "delta": [
+        "breadth/liars.log",
+        "convincing-game"
+      ]
+    },
+    {
+      "id": "liars_gender_secret",
+      "regime_row": "liars_gender_secret|qwen2.5-32b-probe",
+      "units": "auroc",
+      "delta": [
+        "breadth/liars.log",
+        "gender-secret"
+      ]
+    },
+    {
+      "id": "sleeper_agent",
+      "regime_row": "sleeper_agent|llama2-7b-backdoor",
+      "units": "auroc",
+      "delta": [
+        "breadth/sleeper_result.json",
+        "layers.16"
+      ]
+    },
+    {
+      "id": "backdoorllm",
+      "regime_row": "backdoorllm|llama2-7b+lora",
+      "units": "auroc",
+      "delta": [
+        "breadth/backdoorllm_result.json",
+        "layers.16"
+      ]
+    },
+    {
+      "id": "b2w_ai_liar",
+      "regime_row": "b2w_ai_liar|llama3.3-70b-probe",
+      "units": "auroc",
+      "delta": [
+        "breadth/b2w_result.json",
+        "ai_liar"
+      ]
+    },
+    {
+      "id": "b2w_deception_dilution",
+      "regime_row": "b2w_deception_dilution|llama3.3-70b-probe",
+      "units": "auroc",
+      "delta": [
+        "breadth/b2w_result.json",
+        "ai_liar_deception_dilution_100"
+      ]
+    },
+    {
+      "id": "b2w_insider_trading",
+      "regime_row": "b2w_insider_trading|llama3.3-70b-probe",
+      "units": "auroc",
+      "delta": [
+        "breadth/b2w_result.json",
+        "insider_trading_full"
+      ]
+    },
+    {
+      "id": "b2w_sandbagging",
+      "regime_row": "b2w_sandbagging_wmdp_mmlu|llama3.3-70b-probe",
+      "units": "auroc",
+      "delta": [
+        "breadth/b2w_result.json",
+        "sandbagging_wmdp_mmlu"
+      ]
+    },
+    {
+      "id": "gemma_pwd",
+      "regime_row": "sandbag_gemma_pwd|gemma-2-9b-pwlock",
+      "units": "accuracy",
+      "delta": [
+        "sandbagging/org_gemma_pwd.json",
+        "best_decode_layer"
+      ]
+    },
+    {
+      "id": "b2w_apps_backdoors",
+      "regime_row": "b2w_apps_backdoors|llama3.3-70b-probe",
+      "units": "auroc",
+      "delta": [
+        "breadth/b2w_result.json",
+        "apps_backdoors"
+      ]
+    },
+    {
+      "id": "mistral_decode",
+      "regime_row": "sandbag_mistral_wmdp|mistral-7b-pwlock",
+      "units": "auroc",
+      "delta": [
+        "sandbagging/sandbag_access_fair.json",
+        "layers.24"
+      ]
+    },
+    {
+      "id": "mistral_instruct_decode",
+      "regime_row": "sandbag_mistral_instruct|mistral-7b-instruct-pwlock",
+      "units": "accuracy",
+      "delta": [
+        "sandbagging/org_mistral_instruct.json",
+        "best_decode_layer"
+      ]
+    },
+    {
+      "id": "gemma_cb_decode",
+      "regime_row": "sandbag_gemma_cb|gemma-2-9b-cb",
+      "units": "accuracy",
+      "delta": [
+        "sandbagging/org_gemma_cb.json",
+        "best_decode_layer"
+      ]
+    }
+  ]
+}

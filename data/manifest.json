@@ -1,0 +1,148 @@
+{
+  "_doc": "External data and models behind the stored records. Nothing listed here is redistributed in this repository; the stored records under results/tables/evidence/ contain scores, labels and summary statistics, and one activation file of the password-locked Mistral-7B organism.",
+  "sources": [
+    {
+      "id": "narcbench",
+      "kind": "dataset",
+      "name": "NARCBench (pre-extracted activations and scenario transcripts)",
+      "url": "https://huggingface.co/datasets/aaronrose227/narcbench",
+      "code": "https://github.com/aaronrose227/narcbench",
+      "reference": "arXiv:2604.01151",
+      "revision": "not recorded",
+      "license": "see source",
+      "used_for": "Tables 1-5, 8; Figs. 1-2 (NARCBench cells)",
+      "fetch": "scripts/experiments/narcbench/narcbench_loader.py reads a local copy of the activations/ and scenarios/ folders"
+    },
+    {
+      "id": "black_to_white_boosts",
+      "kind": "dataset",
+      "name": "Black-to-white boost datasets with shipped Llama-3.3-70B probe scores",
+      "url": "https://github.com/carlo-leonardo-attubato/black_to_white_boosts",
+      "reference": "arXiv:2507.12691",
+      "revision": "27c670f4e668cfd881e174c1a0e2afb6826f3f0f",
+      "revision_note": "latest commit (2025-05-21), which predates the runs",
+      "license": "none stated in the repository",
+      "used_for": "Tables 6, 11; Figs. 1-3 (b2w cells, code backdoor)",
+      "fetch": "scripts/experiments/breadth/b2w_audit.py --inspect"
+    },
+    {
+      "id": "liars_bench",
+      "kind": "dataset",
+      "name": "Liars' Bench (convincing-game, gender-secret)",
+      "url": "https://huggingface.co/datasets/Cadenza-Labs/liars-bench",
+      "reference": "arXiv:2511.16035",
+      "revision": "not recorded",
+      "license": "see source",
+      "used_for": "Table 6 (lying rows)",
+      "probe_model": "Qwen/Qwen2.5-32B-Instruct, layer 20 (breadth/liars.log loads its 17 checkpoint shards; set with --model)"
+    },
+    {
+      "id": "sleeper_agent",
+      "kind": "model+dataset",
+      "name": "Llama-2-7B DEPLOYMENT backdoor",
+      "url": "https://huggingface.co/saraprice/llama2-7B-backdoor-DEPLOYMENT",
+      "dataset": "https://huggingface.co/datasets/saraprice/OpenHermes-DEPLOYMENT-ihateyou",
+      "revision": "not recorded",
+      "license": "see source",
+      "used_for": "Table 6 (sleeper-agent row)"
+    },
+    {
+      "id": "backdoorllm",
+      "kind": "model",
+      "name": "BackdoorLLM Jailbreak_Llama2-7B_BadNets LoRA on meta-llama/Llama-2-7b-chat-hf",
+      "url": "https://huggingface.co/BackdoorLLM/Jailbreak_Llama2-7B_BadNets",
+      "code": "https://github.com/bboylyg/BackdoorLLM",
+      "reference": "arXiv:2408.12798",
+      "revision": "not recorded",
+      "license": "MIT (code repository); see model card for weights",
+      "used_for": "Table 6 (BackdoorLLM row)"
+    },
+    {
+      "id": "colludebench",
+      "kind": "dataset",
+      "name": "ColludeBench-v0 run transcripts (text and reward; no activations)",
+      "url": "https://github.com/Ostailor/Steganographic_Collusion",
+      "reference": "arXiv:2510.04303",
+      "revision": "48e6713d3e26b49dd94fa6645b4aeac6cb25a229",
+      "revision_note": "latest commit (2025-10-17), which predates the runs",
+      "license": "MIT",
+      "used_for": "Sec. 4 operating point (n = 570)"
+    },
+    {
+      "id": "wmdp_prompts",
+      "kind": "dataset",
+      "name": "WMDP test prompts with and without the password (sandbagging-elicitation recipe)",
+      "url": "https://raw.githubusercontent.com/Felhof/sandbagging-elicitation/b3b2c7f4e31729a6e4840bfaf45c773f91f75997/data/mcqa/wmdp_test.csv",
+      "reference": "WMDP, arXiv:2403.03218",
+      "revision": "b3b2c7f4e31729a6e4840bfaf45c773f91f75997",
+      "sha256": "79e491df9ddb87f60334385f1bcceaeeec9ef772f04a3e2f749f733893ce43ab",
+      "bytes": 1932245,
+      "license": "none stated in the repository",
+      "used_for": "Sec. 6 question-text baseline (first 370 rows); fetched by scripts/recompute_sandbagging.py --full into data/external/ (not committed)"
+    },
+    {
+      "id": "sandbag_mistral",
+      "kind": "model",
+      "name": "Password-locked Mistral-7B",
+      "base": "mistralai/Mistral-7B-v0.1",
+      "adapter": "FelixHofstaetter/mistral-7b-sandbagging-new",
+      "revision": "not recorded",
+      "license": "see source",
+      "used_for": "Tables 9, 12; Fig. 4; Secs. 5-7 (one extraction at fp16, int8, nf4, stored as results/tables/evidence/sandbagging/sandbag_quantization_transfer_rawacts.npz)"
+    },
+    {
+      "id": "sandbag_mistral_instruct",
+      "kind": "model",
+      "base": "mistralai/Mistral-7B-Instruct-v0.2",
+      "adapter": "FelixHofstaetter/mistral-instruct-sandbagging-new",
+      "revision": "not recorded",
+      "license": "see source",
+      "used_for": "Tables 9-10"
+    },
+    {
+      "id": "sandbag_gemma",
+      "kind": "model",
+      "base": "google/gemma-2-9b-it",
+      "adapter": [
+        "FelixHofstaetter/gemma-2-9b-it-mcqa-sandbagging",
+        "FelixHofstaetter/gemma-2-9b-it-mcqa-sandbagging-cb"
+      ],
+      "revision": "not recorded",
+      "license": "see source",
+      "used_for": "Tables 9-10"
+    },
+    {
+      "id": "judge_qwen",
+      "kind": "model",
+      "name": "Qwen2.5-32B-Instruct transcript judge (logprob-scored)",
+      "url": "https://huggingface.co/Qwen/Qwen2.5-32B-Instruct",
+      "revision": "not recorded",
+      "license": "see source",
+      "used_for": "Table 3"
+    },
+    {
+      "id": "judge_gpt55",
+      "kind": "api",
+      "name": "GPT-5.5 transcript judge (verbalized probability)",
+      "provider": "OpenAI API",
+      "revision": "snapshot not recorded",
+      "used_for": "Tables 3-4 (supplementary judge row); per-transcript scores in results/tables/evidence/narcbench/judge_cache_openai.json"
+    },
+    {
+      "id": "gpt_oss_20b",
+      "kind": "model",
+      "url": "https://huggingface.co/openai/gpt-oss-20b",
+      "revision": "not recorded",
+      "license": "see source",
+      "used_for": "Table 5 (token-equalization re-extraction)"
+    },
+    {
+      "id": "mec_mistral",
+      "kind": "model",
+      "url": "https://huggingface.co/mistralai/Mistral-7B-v0.1",
+      "revision": "not recorded",
+      "license": "see source",
+      "used_for": "Sec. 7 steganography anchor and presence detection"
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+
+############ sub-dataset: convincing-game ############
+  rows=150 lies=92 models=['gemma-3-27b-it', 'llama-v3.3-70b-instruct']
+Loading checkpoint shards:   0%|          | 0/17 [00:00<?, ?it/s]Loading checkpoint shards:   6%|▌         | 1/17 [00:07<01:59,  7.47s/it]Loading checkpoint shards:  12%|█▏        | 2/17 [00:15<01:57,  7.83s/it]Loading checkpoint shards:  18%|█▊        | 3/17 [00:23<01:49,  7.79s/it]Loading checkpoint shards:  24%|██▎       | 4/17 [00:31<01:42,  7.90s/it]Loading checkpoint shards:  29%|██▉       | 5/17 [00:39<01:35,  7.95s/it]Loading checkpoint shards:  35%|███▌      | 6/17 [00:47<01:27,  7.93s/it]Loading checkpoint shards:  41%|████      | 7/17 [00:55<01:21,  8.15s/it]Loading checkpoint shards:  47%|████▋     | 8/17 [01:03<01:12,  8.07s/it]Loading checkpoint shards:  53%|█████▎    | 9/17 [01:11<01:04,  8.07s/it]Loading checkpoint shards:  59%|█████▉    | 10/17 [01:19<00:56,  8.02s/it]Loading checkpoint shards:  65%|██████▍   | 11/17 [01:27<00:48,  8.05s/it]Loading checkpoint shards:  71%|███████   | 12/17 [01:35<00:40,  8.06s/it]Loading checkpoint shards:  76%|███████▋  | 13/17 [01:43<00:32,  8.04s/it]Loading checkpoint shards:  82%|████████▏ | 14/17 [01:52<00:24,  8.08s/it]Loading checkpoint shards:  88%|████████▊ | 15/17 [02:00<00:16,  8.12s/it]Loading checkpoint shards:  94%|█████████▍| 16/17 [02:08<00:08,  8.17s/it]Loading checkpoint shards: 100%|██████████| 17/17 [02:13<00:00,  7.31s/it]Loading checkpoint shards: 100%|██████████| 17/17 [02:13<00:00,  7.88s/it]
+  extract 0/150
+  convincing-game: {'n': 150, 'pos': 92, 'act': 0.737, 'text': 0.719, 'full': 0.737, 'delta': 0.018, 'floor95': 0.119, 'p': 0.487, 'verdict': 'CONFOUNDED'}
+
+############ sub-dataset: gender-secret ############
+Generating test split:   0%|          | 0/762 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 762/762 [00:00<00:00, 22453.38 examples/s]
+  rows=150 lies=36 models=['llama-v3.3-70b-instruct-secret-male', 'mistral-small-3.1-24b-instruct-secret-male']
+Loading checkpoint shards:   0%|          | 0/17 [00:00<?, ?it/s]Loading checkpoint shards:   6%|▌         | 1/17 [00:02<00:37,  2.35s/it]Loading checkpoint shards:  12%|█▏        | 2/17 [00:04<00:32,  2.18s/it]Loading checkpoint shards:  18%|█▊        | 3/17 [00:06<00:29,  2.14s/it]Loading checkpoint shards:  24%|██▎       | 4/17 [00:08<00:28,  2.16s/it]Loading checkpoint shards:  29%|██▉       | 5/17 [00:10<00:25,  2.09s/it]Loading checkpoint shards:  35%|███▌      | 6/17 [00:12<00:23,  2.10s/it]Loading checkpoint shards:  41%|████      | 7/17 [00:14<00:20,  2.10s/it]Loading checkpoint shards:  47%|████▋     | 8/17 [00:16<00:18,  2.10s/it]Loading checkpoint shards:  53%|█████▎    | 9/17 [00:19<00:16,  2.10s/it]Loading checkpoint shards:  59%|█████▉    | 10/17 [00:21<00:14,  2.09s/it]Loading checkpoint shards:  65%|██████▍   | 11/17 [00:23<00:12,  2.07s/it]Loading checkpoint shards:  71%|███████   | 12/17 [00:25<00:10,  2.08s/it]Loading checkpoint shards:  76%|███████▋  | 13/17 [00:27<00:08,  2.06s/it]Loading checkpoint shards:  82%|████████▏ | 14/17 [00:29<00:06,  2.07s/it]Loading checkpoint shards:  88%|████████▊ | 15/17 [00:31<00:04,  2.08s/it]Loading checkpoint shards:  94%|█████████▍| 16/17 [00:33<00:02,  2.08s/it]Loading checkpoint shards: 100%|██████████| 17/17 [00:34<00:00,  1.89s/it]Loading checkpoint shards: 100%|██████████| 17/17 [00:34<00:00,  2.06s/it]
+  extract 0/150
+  gender-secret: {'n': 150, 'pos': 36, 'act': 0.902, 'text': 0.997, 'full': 0.903, 'delta': -0.094, 'floor95': 0.131, 'p': 0.9, 'verdict': 'CONFOUNDED'}
+
+############ sub-dataset: harm-pressure-choice ############
+Generating test split:   0%|          | 0/5400 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 5400/5400 [00:00<00:00, 100191.28 examples/s]
+  rows=150 lies=23 models=['llama-v3.3-70b-instruct', 'mistral-small-3.1-24b-instruct', 'qwen-2.5-72b-instruct']
+Loading checkpoint shards:   0%|          | 0/17 [00:00<?, ?it/s]Loading checkpoint shards:   6%|▌         | 1/17 [00:03<00:57,  3.62s/it]Loading checkpoint shards:  12%|█▏        | 2/17 [00:06<00:45,  3.06s/it]Loading checkpoint shards:  18%|█▊        | 3/17 [00:08<00:35,  2.53s/it]Loading checkpoint shards:  24%|██▎       | 4/17 [00:10<00:29,  2.28s/it]Loading checkpoint shards:  29%|██▉       | 5/17 [00:12<00:26,  2.19s/it]Loading checkpoint shards:  35%|███▌      | 6/17 [00:14<00:23,  2.15s/it]Loading checkpoint shards:  41%|████      | 7/17 [00:16<00:21,  2.11s/it]Loading checkpoint shards:  47%|████▋     | 8/17 [00:18<00:18,  2.07s/it]Loading checkpoint shards:  53%|█████▎    | 9/17 [00:20<00:16,  2.09s/it]Loading checkpoint shards:  59%|█████▉    | 10/17 [00:22<00:14,  2.10s/it]Loading checkpoint shards:  65%|██████▍   | 11/17 [00:24<00:12,  2.14s/it]Loading checkpoint shards:  71%|███████   | 12/17 [00:26<00:10,  2.13s/it]Loading checkpoint shards:  76%|███████▋  | 13/17 [00:28<00:08,  2.03s/it]Loading checkpoint shards:  82%|████████▏ | 14/17 [00:30<00:06,  2.02s/it]Loading checkpoint shards:  88%|████████▊ | 15/17 [00:32<00:04,  2.04s/it]Loading checkpoint shards:  94%|█████████▍| 16/17 [00:34<00:02,  2.06s/it]Loading checkpoint shards: 100%|██████████| 17/17 [00:36<00:00,  1.86s/it]Loading checkpoint shards: 100%|██████████| 17/17 [00:36<00:00,  2.13s/it]
+  extract 0/150
+Traceback (most recent call last):
+  File "/workspace/repo/src/breadth/liars_bench_audit.py", line 285, in <module>
+    main()
+  File "/workspace/repo/src/breadth/liars_bench_audit.py", line 271, in main
+    res = audit(X, texts, y, g, n_perm=a.n_perm)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/src/breadth/liars_bench_audit.py", line 213, in audit
+    tpred = _oof(text_clf(), list(texts), y, groups)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/src/breadth/liars_bench_audit.py", line 189, in _oof
+    return cross_val_predict(est, X, y, cv=GroupKFold(k), groups=g, method="predict_proba")[:, 1]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py", line 1240, in cross_val_predict
+    predictions = parallel(
+                  ^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/utils/parallel.py", line 91, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/joblib/parallel.py", line 1986, in __call__
+    return output if self.return_generator else list(output)
+                                                ^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/joblib/parallel.py", line 1914, in _get_sequential_output
+    res = func(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/utils/parallel.py", line 184, in __call__
+    return self.function(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/model_selection/_validation.py", line 1328, in _fit_and_predict
+    estimator.fit(X_train, y_train, **fit_params)
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/base.py", line 1403, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/pipeline.py", line 636, in fit
+    Xt = self._fit(
+         ^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/pipeline.py", line 565, in _fit
+    X, fitted_transformer = fit_transform_one_cached(
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/joblib/memory.py", line 326, in __call__
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/pipeline.py", line 1593, in _fit_transform_one_with_callbacks
+    Xt, transformer = _fit_transform_one(
+                      ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/pipeline.py", line 1566, in _fit_transform_one
+    res = transformer.fit_transform(X, y, **params.get("fit_transform", {}))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/feature_extraction/text.py", line 2110, in fit_transform
+    X = super().fit_transform(raw_documents)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/base.py", line 1403, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/feature_extraction/text.py", line 1387, in fit_transform
+    vocabulary, X = self._count_vocab(raw_documents, self.fixed_vocabulary_)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/sklearn/feature_extraction/text.py", line 1293, in _count_vocab
+    raise ValueError(
+ValueError: empty vocabulary; perhaps the documents only contain stop words

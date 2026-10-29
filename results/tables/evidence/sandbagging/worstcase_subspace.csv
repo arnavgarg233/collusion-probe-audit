@@ -1,0 +1,7 @@
+# fp16 run of sandbag_one_run.csv (n=205, layer 24). Top-k PCA directions fit on the training fold and projected out; 4-way decode accuracy (chance 0.25), GroupKFold by subject.
+subspace_removed_topk,decode_acc,chance
+0,0.9024,0.25
+3,0.3512,0.25
+6,0.2537,0.25
+10,0.2098,0.25
+20,0.1854,0.25

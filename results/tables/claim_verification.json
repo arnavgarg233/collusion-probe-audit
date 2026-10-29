@@ -1,0 +1,525 @@
+{
+  "all_pass": true,
+  "claims": [
+    {
+      "checks": 2,
+      "evidence_sha256": {
+        "narcbench/gapfill_corrected.csv": "c09beb4e017bad41c028246ca34d50c282bca5dd4b53bb5853726408535cffa4",
+        "narcbench/technique_reproduction.json": "76dd9f6e9199d3ddb0e5d36e7d71b897801c88e4118de6b38fb6e2096b75fe2f"
+      },
+      "failures": [],
+      "id": "C-ABS-PRIOR-AUROC",
+      "passed": true,
+      "where": "Abstract; Sec. 1 (detectors report AUROC 0.9 to 1.0; NARCBench reports 1.0)"
+    },
+    {
+      "checks": 3,
+      "evidence_sha256": {},
+      "failures": [],
+      "id": "C-SETTINGS-COUNT",
+      "passed": true,
+      "where": "Abstract; Secs. 1, 2, 5 (fifteen settings: eleven confounded, four white-box wins)"
+    },
+    {
+      "checks": 3,
+      "evidence_sha256": {
+        "sandbagging/sandbag_one_run.json": "68f43cc3596dd5228f1344684d2f65bd58fa0ddf6d2ce6224009477e4b6f5687"
+      },
+      "failures": [],
+      "id": "C-ABS-SANDBAG",
+      "passed": true,
+      "where": "Abstract; highlights; Secs. 1, 6, 8 (hidden answer at AUROC 0.99 / 0.987, visible answer always wrong)"
+    },
+    {
+      "checks": 2,
+      "evidence_sha256": {
+        "breadth/fpr_b2w_large.csv": "65488d93082c585b39097db642d74a0456fb6241a4b450737fe5d9c6e9ef1521"
+      },
+      "failures": [],
+      "id": "C-ABS-BACKDOOR",
+      "passed": true,
+      "where": "Abstract; Sec. 1 (code backdoor flagged at 1% FPR where a text monitor flags none)"
+    },
+    {
+      "checks": 1,
+      "evidence_sha256": {},
+      "failures": [],
+      "id": "C-INTRO-QUANT",
+      "passed": true,
+      "where": "Sec. 1 (decode survives int8 and nf4: AUROC 0.98 to 0.99)"
+    },
+    {
+      "checks": 1,
+      "evidence_sha256": {
+        "stego/mec_steganalysis_presence_fpr.json": "4ddb306ff7cb0a93ed5f2f98262e1c68a561f171ef7a4c64383e11193e2ab2e2"
+      },
+      "failures": [],
+      "id": "C-INTRO-STEGANALYSIS",
+      "passed": true,
+      "where": "Sec. 1 (key-agnostic steganalysis at chance, 0.51)"
+    },
+    {
+      "checks": 3,
+      "evidence_sha256": {
+        "configs/estimator.json": "26ec9682329d0558b26b66de1e33683a9db91a4025584b32729ca005ea987141"
+      },
+      "failures": [],
+      "id": "C-PROTOCOL",
+      "passed": true,
+      "where": "Sec. 3 and Box 'Access-Fair White-Box Audit' (95th-percentile floor, effect size 0.10, PCA <= 30)"
+    },
+    {
+      "checks": 1,
+      "evidence_sha256": {},
+      "failures": [],
+      "id": "C-WIN-MARGIN",
+      "passed": true,
+      "where": "Sec. 3 (every credited win has delta above 0.15)"
+    },
+    {
+      "checks": 10,
+      "evidence_sha256": {
+        "sandbagging/org_gemma_pwd.json": "321970ef8dc2f7a69311b93cfee7cafafd18ef8d56d50e523c422babecfc7e07"
+      },
+      "failures": [],
+      "id": "C-THRESHOLDS",
+      "passed": true,
+      "where": "Sec. 3 (threshold sensitivity recomputed from the records: only password-locked Gemma depends on the cutoff)"
+    },
+    {
+      "checks": 8,
+      "evidence_sha256": {
+        "narcbench/gapfill_corrected.csv": "c09beb4e017bad41c028246ca34d50c282bca5dd4b53bb5853726408535cffa4",
+        "sandbagging/sandbag_access_fair.json": "ae2e19cf5cf97e12ef279067f8f6e28db38a580fa49c67a95ce7f95eec7d1ed2"
+      },
+      "failures": [],
+      "id": "C-FLOOR-TABLE",
+      "passed": true,
+      "where": "Table 1 (permutation floor by setting and n)"
+    },
+    {
+      "checks": 5,
+      "evidence_sha256": {},
+      "failures": [],
+      "id": "C-POSITIVE-CONTROL",
+      "passed": true,
+      "where": "Sec. 3 (calibrated positive control first credited at ~0.36 bits, delta +0.166 vs floor 0.069; redundant carrier never credited)"
+    },
+    {
+      "checks": 6,
+      "evidence_sha256": {
+        "narcbench/gapfill_corrected.csv": "c09beb4e017bad41c028246ca34d50c282bca5dd4b53bb5853726408535cffa4"
+      },
+      "failures": [],
+      "id": "C-T2-GPTOSS-EMERGENT",
+      "passed": true,
+      "where": "Table 2 and Sec. 4 (gpt_oss_20b core emergent; gapfill_corrected.csv)"
+    },
+    {
+      "checks": 6,
+      "evidence_sha256": {
+        "narcbench/natural_subsat.csv": "653ba2237ca3280ab24c79f54316eb28d718cd18b3d47b804373afe79e55cc5e"
+      },
+      "failures": [],
+      "id": "C-T2-QWEN3-EMERGENT",
+      "passed": true,
+      "where": "Table 2 and Sec. 4 (qwen3_32b core emergent; natural_subsat.csv)"
+    },
+    {
+      "checks": 6,
+      "evidence_sha256": {
+        "narcbench/gapfill_corrected.csv": "c09beb4e017bad41c028246ca34d50c282bca5dd4b53bb5853726408535cffa4"
+      },
+      "failures": [],
+      "id": "C-T2-GPTOSS-COLLUDER",
+      "passed": true,
+      "where": "Table 2 and Sec. 4 (gpt_oss_20b core colluder; gapfill_corrected.csv)"
+    },
+    {
+      "checks": 6,
+      "evidence_sha256": {
+        "narcbench/gapfill_corrected.csv": "c09beb4e017bad41c028246ca34d50c282bca5dd4b53bb5853726408535cffa4"
+      },
+      "failures": [],
+      "id": "C-T2-QWEN3-COLLUDER",
+      "passed": true,
+      "where": "Table 2 and Sec. 4 (qwen3_32b core colluder; gapfill_corrected.csv)"
+    },
+    {
+      "checks": 2,
+      "evidence_sha256": {
+        "narcbench/technique_reproduction.json": "76dd9f6e9199d3ddb0e5d36e7d71b897801c88e4118de6b38fb6e2096b75fe2f"
+      },
+      "failures": [],
+      "id": "C-VOTE-BASELINE",
+      "passed": true,
+      "where": "Sec. 4 and Table 2 footnote (vote-inclusive behaviour baseline ~1.0; votes 1.00 on core, bet spread 1.00 on stego)"
+    },
+    {
+      "checks": 2,
+      "evidence_sha256": {
+        "narcbench/dim_sweep_qwen3_accessfair.csv": "998711b57e2772da73d3802163f27d6b73576b7428ef3b43dd7234de95db8d72"
+      },
+      "failures": [],
+      "id": "C-QWEN3-TEXT-ALIGNED",
+      "passed": true,
+      "where": "Sec. 4 (Qwen3 core baseline reproduces at 0.970 on the n=78 text-aligned subset)"
+    },
+    {
+      "checks": 3,
+      "evidence_sha256": {
+        "narcbench/technique_reproduction.json": "76dd9f6e9199d3ddb0e5d36e7d71b897801c88e4118de6b38fb6e2096b75fe2f"
+      },
+      "failures": [],
+      "id": "C-REPRODUCTION",
+      "passed": true,
+      "where": "Sec. 4 (probe reproduction on gpt-oss: 1.00 core, 1.00 stego, up to 0.98 transfer)"
+    },
+    {
+      "checks": 10,
+      "evidence_sha256": {
+        "narcbench/baseline_sensitivity.csv": "25c3ec31a2dab6af822ffe612ba0110feb9dd7eb2cd9fbf9c811547d83a9ba19",
+        "narcbench/gapfill_corrected.csv": "c09beb4e017bad41c028246ca34d50c282bca5dd4b53bb5853726408535cffa4",
+        "narcbench/judge2.log": "b85f3b0adb5aa7d6949c992c166cccf6c95aad2bfd5eb2d0ead3da0a44f40ed9"
+      },
+      "failures": [],
+      "id": "C-T3-JUDGE",
+      "passed": true,
+      "where": "Table 3 and Secs. 4, 7 (Qwen2.5-32B transcript judge; GPT-5.5 supplementary judge)"
+    },
+    {
+      "checks": 15,
+      "evidence_sha256": {
+        "narcbench/baseline_sensitivity.csv": "25c3ec31a2dab6af822ffe612ba0110feb9dd7eb2cd9fbf9c811547d83a9ba19",
+        "narcbench/gapfill_corrected.csv": "c09beb4e017bad41c028246ca34d50c282bca5dd4b53bb5853726408535cffa4"
+      },
+      "failures": [],
+      "id": "C-T4-BASELINE-SWEEP",
+      "passed": true,
+      "where": "Table 4 and Sec. 4 (sensitivity to text-baseline strength)"
+    },
+    {
+      "checks": 5,
+      "evidence_sha256": {
+        "narcbench/fpr_operating_points.csv": "0f4612de26d5e9df3923f710d0112358cb213cb56fe4a60fa2cf0faa461becff"
+      },
+      "failures": [],
+      "id": "C-OPERATING-NARCBENCH",
+      "passed": true,
+      "where": "Sec. 4 (Qwen3 operating point: 87.0% vs 4.7% at 1% FPR; per-cell n 108 to 288, 72 negatives)"
+    },
+    {
+      "checks": 6,
+      "evidence_sha256": {
+        "breadth/colludebench_fpr.json": "92837c80bfbecc8ca9d37f59b493ab8cf913b9d4c5742d0a3bdbbae0ca82276d"
+      },
+      "failures": [],
+      "id": "C-COLLUDEBENCH",
+      "passed": true,
+      "where": "Sec. 4 (ColludeBench: n=570, 93.3% at 5% FPR, text AUROC 0.937, delta -0.087 vs floor 0.072)"
+    },
+    {
+      "checks": 4,
+      "evidence_sha256": {
+        "narcbench/technique_reproduction.json": "76dd9f6e9199d3ddb0e5d36e7d71b897801c88e4118de6b38fb6e2096b75fe2f"
+      },
+      "failures": [],
+      "id": "C-SCALE",
+      "passed": true,
+      "where": "Sec. 4 (behaviour baseline on core across the four models)"
+    },
+    {
+      "checks": 2,
+      "evidence_sha256": {
+        "narcbench/evasion.csv": "6ad5dbe7aed9968f426a806030a72879377dc779f0d99d82529d81da06b6468d"
+      },
+      "failures": [],
+      "id": "C-LENGTH-RESIDUALIZATION",
+      "passed": true,
+      "where": "Sec. 4 (residualizing length weakens the stego probe 0.996 -> 0.62)"
+    },
+    {
+      "checks": 10,
+      "evidence_sha256": {
+        "narcbench/evasion_real.json": "88b29b4b59193b5ae14d15b9481b1a511f123878310770f14f8cae72030ab857"
+      },
+      "failures": [],
+      "id": "C-T5-TOKEN-EQUALIZATION",
+      "passed": true,
+      "where": "Table 5 and Sec. 4 (token-equalization attack)"
+    },
+    {
+      "checks": 5,
+      "evidence_sha256": {
+        "breadth/b2w_result.json": "b7e0c67c4f5ed568602f3a72a8e87be2859f345b92f1ccda13a66a973c4a8b52",
+        "breadth/backdoorllm_result.json": "a0257cce0ee0b6fcd6f1845929bdf1780cc826ec83e5e17e17452ea8274f33e7",
+        "breadth/sleeper_result.json": "f12671877b358775a659b1208c8c0e89ee6f385c618bab7aeb61439bb80f8661"
+      },
+      "failures": [],
+      "id": "C-BREADTH-DELTAS",
+      "passed": true,
+      "where": "Sec. 5 text (visible-trigger backdoors, lying tasks, insider trading)"
+    },
+    {
+      "checks": 4,
+      "evidence_sha256": {
+        "breadth/b2w_result.json": "b7e0c67c4f5ed568602f3a72a8e87be2859f345b92f1ccda13a66a973c4a8b52"
+      },
+      "failures": [],
+      "id": "C-T6-B2W-AI-LIAR",
+      "passed": true,
+      "where": "Table 6 (b2w ai_liar)"
+    },
+    {
+      "checks": 4,
+      "evidence_sha256": {
+        "breadth/b2w_result.json": "b7e0c67c4f5ed568602f3a72a8e87be2859f345b92f1ccda13a66a973c4a8b52"
+      },
+      "failures": [],
+      "id": "C-T6-B2W-DILUTION",
+      "passed": true,
+      "where": "Table 6 (b2w ai_liar_deception_dilution_100)"
+    },
+    {
+      "checks": 4,
+      "evidence_sha256": {
+        "breadth/b2w_result.json": "b7e0c67c4f5ed568602f3a72a8e87be2859f345b92f1ccda13a66a973c4a8b52"
+      },
+      "failures": [],
+      "id": "C-T6-B2W-INSIDER",
+      "passed": true,
+      "where": "Table 6 (b2w insider_trading_full)"
+    },
+    {
+      "checks": 4,
+      "evidence_sha256": {
+        "breadth/b2w_result.json": "b7e0c67c4f5ed568602f3a72a8e87be2859f345b92f1ccda13a66a973c4a8b52"
+      },
+      "failures": [],
+      "id": "C-T6-B2W-SANDBAGGING",
+      "passed": true,
+      "where": "Table 6 (b2w sandbagging_wmdp_mmlu)"
+    },
+    {
+      "checks": 4,
+      "evidence_sha256": {
+        "breadth/b2w_result.json": "b7e0c67c4f5ed568602f3a72a8e87be2859f345b92f1ccda13a66a973c4a8b52"
+      },
+      "failures": [],
+      "id": "C-T6-B2W-APPS",
+      "passed": true,
+      "where": "Table 6 (b2w apps_backdoors)"
+    },
+    {
+      "checks": 4,
+      "evidence_sha256": {},
+      "failures": [],
+      "id": "C-T6-LIARS-CONVINCING",
+      "passed": true,
+      "where": "Table 6 (Liars' Bench convincing-game)"
+    },
+    {
+      "checks": 4,
+      "evidence_sha256": {},
+      "failures": [],
+      "id": "C-T6-LIARS-GENDER",
+      "passed": true,
+      "where": "Table 6 (Liars' Bench gender-secret)"
+    },
+    {
+      "checks": 4,
+      "evidence_sha256": {
+        "breadth/sleeper_result.json": "f12671877b358775a659b1208c8c0e89ee6f385c618bab7aeb61439bb80f8661"
+      },
+      "failures": [],
+      "id": "C-T6-SLEEPER",
+      "passed": true,
+      "where": "Table 6 (sleeper, layer 16)"
+    },
+    {
+      "checks": 4,
+      "evidence_sha256": {
+        "breadth/backdoorllm_result.json": "a0257cce0ee0b6fcd6f1845929bdf1780cc826ec83e5e17e17452ea8274f33e7"
+      },
+      "failures": [],
+      "id": "C-T6-BACKDOORLLM",
+      "passed": true,
+      "where": "Table 6 (backdoorllm, layer 16)"
+    },
+    {
+      "checks": 7,
+      "evidence_sha256": {
+        "breadth/b2w_result.json": "b7e0c67c4f5ed568602f3a72a8e87be2859f345b92f1ccda13a66a973c4a8b52"
+      },
+      "failures": [],
+      "id": "C-APPS-MULTIPLICITY",
+      "passed": true,
+      "where": "Table 6 caption and Sec. 5 (code backdoor p=0.025, n=150; m=12, BH q=0.30, Bonferroni 0.004)"
+    },
+    {
+      "checks": 3,
+      "evidence_sha256": {},
+      "failures": [],
+      "id": "C-FIG-BOUNDARY",
+      "passed": true,
+      "where": "Figs. 1-2 (ten executed settings inside their floor; both withheld settings above it)"
+    },
+    {
+      "checks": 4,
+      "evidence_sha256": {
+        "narcbench/head_to_head.csv": "fb7f97057a50bc08fbcb1891c8886936f2461f322fb251c4bebb133d8834164e"
+      },
+      "failures": [],
+      "id": "C-T7-HEAD-TO-HEAD",
+      "passed": true,
+      "where": "Table 7 and Sec. 5 (naive boost vs access-fair delta)"
+    },
+    {
+      "checks": 9,
+      "evidence_sha256": {
+        "narcbench/dim_sweep_gptoss.csv": "527e8090ad03ab2a428174fbb94ca5514b994df18c89cecc61bab2070da0016a",
+        "narcbench/dim_sweep_qwen3_accessfair.csv": "998711b57e2772da73d3802163f27d6b73576b7428ef3b43dd7234de95db8d72"
+      },
+      "failures": [],
+      "id": "C-T8-DIMSWEEP",
+      "passed": true,
+      "where": "Table 8 and Sec. 5 (activation dimensionality sweep)"
+    },
+    {
+      "checks": 2,
+      "evidence_sha256": {
+        "sandbagging/org_gemma_pwd.json": "321970ef8dc2f7a69311b93cfee7cafafd18ef8d56d50e523c422babecfc7e07"
+      },
+      "failures": [],
+      "id": "C-ORGANISMS",
+      "passed": true,
+      "where": "Sec. 5 (decode 0.85 to 0.91 where capability is withheld; password-locked Gemma 0.33)"
+    },
+    {
+      "checks": 5,
+      "evidence_sha256": {},
+      "failures": [],
+      "id": "C-QUANTIZATION",
+      "passed": true,
+      "where": "Sec. 5 (late-layer decode under fp16, int8 and nf4; layer 16 weak)"
+    },
+    {
+      "checks": 17,
+      "evidence_sha256": {
+        "sandbagging/org_gemma_cb.json": "885e09374a4f0135a8bc37fdad249c11726facdd9535e72d51fb9addc6bae01e",
+        "sandbagging/org_gemma_pwd.json": "321970ef8dc2f7a69311b93cfee7cafafd18ef8d56d50e523c422babecfc7e07",
+        "sandbagging/org_mistral_instruct.json": "62f7a37c16da889f91ffd9d6528e79877c0faebbb4c5360ecca4ce01f05b3830",
+        "sandbagging/sandbag_one_run.json": "68f43cc3596dd5228f1344684d2f65bd58fa0ddf6d2ce6224009477e4b6f5687"
+      },
+      "failures": [],
+      "id": "C-T9-ORGSUMMARY",
+      "passed": true,
+      "where": "Table 9 (sandbagging organisms on 370 WMDP questions)"
+    },
+    {
+      "checks": 12,
+      "evidence_sha256": {
+        "sandbagging/org_gemma_cb.json": "885e09374a4f0135a8bc37fdad249c11726facdd9535e72d51fb9addc6bae01e",
+        "sandbagging/org_gemma_pwd.json": "321970ef8dc2f7a69311b93cfee7cafafd18ef8d56d50e523c422babecfc7e07",
+        "sandbagging/org_mistral_instruct.json": "62f7a37c16da889f91ffd9d6528e79877c0faebbb4c5360ecca4ce01f05b3830"
+      },
+      "failures": [],
+      "id": "C-T10-LAYERS",
+      "passed": true,
+      "where": "Table 10 and Sec. 5 (layer profiles)"
+    },
+    {
+      "checks": 23,
+      "evidence_sha256": {
+        "breadth/fpr_b2w_large.csv": "65488d93082c585b39097db642d74a0456fb6241a4b450737fe5d9c6e9ef1521"
+      },
+      "failures": [],
+      "id": "C-T11-OPERATING",
+      "passed": true,
+      "where": "Table 11, Fig. 3 and Sec. 5 (operating points on large-n datasets)"
+    },
+    {
+      "checks": 12,
+      "evidence_sha256": {},
+      "failures": [],
+      "id": "C-ROC-RECOMPUTED",
+      "passed": true,
+      "where": "Fig. 3 and Table 11 (recomputed from the stored out-of-fold scores)"
+    },
+    {
+      "checks": 8,
+      "evidence_sha256": {
+        "sandbagging/sandbag_access_fair.json": "ae2e19cf5cf97e12ef279067f8f6e28db38a580fa49c67a95ce7f95eec7d1ed2",
+        "sandbagging/sandbag_one_run.json": "68f43cc3596dd5228f1344684d2f65bd58fa0ddf6d2ce6224009477e4b6f5687"
+      },
+      "failures": [],
+      "id": "C-SANDBAG-TEXT",
+      "passed": true,
+      "where": "Sec. 6 (n=205 sandbagged; decode and baselines)"
+    },
+    {
+      "checks": 28,
+      "evidence_sha256": {
+        "sandbagging/sandbag_one_run.json": "68f43cc3596dd5228f1344684d2f65bd58fa0ddf6d2ce6224009477e4b6f5687"
+      },
+      "failures": [],
+      "id": "C-T12-SANDBAG",
+      "passed": true,
+      "where": "Table 12 and Fig. 4 (decode by layer, one fp16 extraction)"
+    },
+    {
+      "checks": 4,
+      "evidence_sha256": {
+        "sandbagging/steer.log": "fd101a0a5178d782310ec9a8bec6e589c1d8bfbed3ebf846c4761ead8122abba"
+      },
+      "failures": [],
+      "id": "C-STEERING",
+      "passed": true,
+      "where": "Sec. 6 (separate steering run: 160 items, alpha=4, +0.069 vs opposite +0.244)"
+    },
+    {
+      "checks": 6,
+      "evidence_sha256": {
+        "calibration/controlled_delta_vs_direct_cmi.json": "8450cc52abdf9aa0df6deae3aae2422fc132b4560476903eb5b0635ae994dbc6"
+      },
+      "failures": [],
+      "id": "C-CMI",
+      "passed": true,
+      "where": "Sec. 7 (code-backdoor CMI: plug-in 0.70 bits, kNN 0.34 bits, nulls 0.33 and 0.07, p < 0.04)"
+    },
+    {
+      "checks": 4,
+      "evidence_sha256": {
+        "sandbagging/worstcase_subspace.csv": "6b38740b896cfe2a4fb4269209dee1da35c3c0e3047b0723d5c653c727a5f64d"
+      },
+      "failures": [],
+      "id": "C-WORSTCASE",
+      "passed": true,
+      "where": "Sec. 7 (top principal directions removed from the layer-24 decode)"
+    },
+    {
+      "checks": 12,
+      "evidence_sha256": {
+        "stego/mec_highpower.json": "421e4665efca659328d110c017b4dce95d1e6f26b9e475182223cf19a4bd4ef4"
+      },
+      "failures": [],
+      "id": "C-MEC",
+      "passed": true,
+      "where": "Sec. 7 (minimum-entropy-coupling anchor, n=1200)"
+    },
+    {
+      "checks": 5,
+      "evidence_sha256": {
+        "stego/mec_steganalysis_presence_fpr.json": "4ddb306ff7cb0a93ed5f2f98262e1c68a561f171ef7a4c64383e11193e2ab2e2"
+      },
+      "failures": [],
+      "id": "C-PRESENCE",
+      "passed": true,
+      "where": "Sec. 7 (key-agnostic presence detection at chance)"
+    }
+  ],
+  "n_checks": 324,
+  "n_checks_passing": 324,
+  "n_claims": 52,
+  "n_passing": 52
+}

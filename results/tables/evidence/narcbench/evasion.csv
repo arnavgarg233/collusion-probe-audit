@@ -1,0 +1,9 @@
+cell,detector,auroc,n
+gpt_oss_20b_core_emergent,raw_activation,0.971,108
+gpt_oss_20b_core_emergent,length_only,0.606,108
+gpt_oss_20b_core_emergent,activation_length_residualized,0.917,108
+gpt_oss_20b_core_emergent,activation_length_matched,0.985,108
+gpt_oss_20b_stego_emergent,raw_activation,0.996,120
+gpt_oss_20b_stego_emergent,length_only,0.977,120
+gpt_oss_20b_stego_emergent,activation_length_residualized,0.619,120
+gpt_oss_20b_stego_emergent,activation_length_matched,0.844,120
